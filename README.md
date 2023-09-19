@@ -28,3 +28,8 @@
 - Interactive Console: Effortless input and output.
 - Monitoring System: Educators can track and guide.
 - Strong Assessments: Offline test hosting.
+
+
+# Execution:
+* Figma Desing : [link](https://www.figma.com/file/v9nur0uziSTKFoJjB8nrKN/Untitled?type=design&node-id=0%3A1&mode=design&t=S5AMo840ItijwGYc-1)
+- HomePage : [@Adityapaliwal1](https://github.com/adityapaliwal1)
