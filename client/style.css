@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+
+.navbar{
+    height: 50px;
+    border: 1px solid red;
+ 
+    
+}
+.navbar ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  
+
+}
+.navbar ul a{
+    padding: 28px;
+    text-decoration: none;
+    color: black;
+}
