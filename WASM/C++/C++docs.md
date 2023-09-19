@@ -24,9 +24,10 @@ C/C++ => Emscripten SDK compiler => .WASM => web Browser(HTML+Js+.wasm)
 
 6. installation complete,
    to compile C/C++, following code will be required-
+
    To just get the wasm file you can use following command. This command will give you only source.wasm file.
 
-emcc source.c or source.cpp -s STANDALONE_WASM
+emcc source.cpp -s STANDALONE_WASM
 
 To get the source.html,source.js and source.wasm-
 emcc source.c or source.cpp -s WASM=1 -o source.html
@@ -34,4 +35,8 @@ emcc source.c or source.cpp -s WASM=1 -o source.html
 
 ## Example
 
-let us take this following c++ code-
+to execute code in hello.cpp
+
+command- emcc ..\hello.cpp -s WASM=1 -o ..\hello.html
+
+this gives us hello.html,hello.wasm,hello.js in directory, the code is executable from hello.js.
