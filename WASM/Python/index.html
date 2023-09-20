@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/unstable/pyscript.js"></script>
+    <style>
+      #run-button {
+        padding: 5px;
+        background-color: aquamarine;
+      }
+      #code-input {
+        padding: 5px;
+        color: black;
+        font-family: monospace;
+        background-color: lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea
+      id="code-input"
+      cols="50"
+      rows="20"
+      placeholder="Enter Python code here"
+    ></textarea
+    ><br />
+    <button id="run-button">Run Code</button>
+    <div id="output"></div>
+
+    <script>
+      const codeInput = document.getElementById("code-input");
+      const runButton = document.getElementById("run-button");
+      const outputDiv = document.getElementById("output");
+
+      let scriptLoaded = false;
+
+      runButton.addEventListener("click", () => {
+        if (!scriptLoaded) {
+          // Load the PyScript script on the first run
+          const pyscriptScript = document.createElement("script");
+          pyscriptScript.src = "https://pyscript.net/unstable/pyscript.js";
+          pyscriptScript.defer = true;
+          document.head.appendChild(pyscriptScript);
+          scriptLoaded = true;
+        }
+
+        // Clear the previous output
+        outputDiv.innerHTML = "";
+
+        // Get the Python code from the textarea
+        const pythonCode = codeInput.value;
+
+        // Execute the Python code
+        const pyScript = document.createElement("py-script");
+        pyScript.textContent = pythonCode;
+
+        // Append the py-script element to the body
+        document.body.appendChild(pyScript);
+
+        // Capture and format the output
+        const observer = new MutationObserver(() => {
+          const unformattedOutput = document.querySelector(
+            "div[class='py-script-output']"
+          );
+
+          if (unformattedOutput) {
+            const formattedOutput = unformattedOutput.textContent;
+            outputDiv.textContent = formattedOutput;
+            observer.disconnect();
+          }
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+      });
+    </script>
+  </body>
+</html>
