@@ -6,6 +6,7 @@ const path = require("path");
 
 const mongoUri =
   "mongodb+srv://ashutosh7i:tempPassword001@testcluster.sa3qcgj.mongodb.net/testDB";
+// yes i know credentials are exposed, but Mongo will only accept connections from my IP only(that too is dynamic😂)
 
 const client = new MongoClient(mongoUri);
 if (client.connect()) {
