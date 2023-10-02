@@ -1,0 +1,28 @@
+{
+  "name": "node-express-mongodb-ejs_mvc_template",
+  "version": "1.0.0",
+  "description": "A simple MVC template which will help me easy web apps using node, express, mongodb,ejs and following the MVCR pattern",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashutosh7i/Node-Express-MongoDB-EJS_MVC_Template.git"
+  },
+  "author": "Aashutosh Soni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashutosh7i/Node-Express-MongoDB-EJS_MVC_Template/issues"
+  },
+  "homepage": "https://github.com/ashutosh7i/Node-Express-MongoDB-EJS_MVC_Template#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "moment": "^2.29.4",
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.1.0"
+  }
+}
