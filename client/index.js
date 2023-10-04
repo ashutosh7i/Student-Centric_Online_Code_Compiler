@@ -171,3 +171,26 @@ particlesJS('particles-js', {
     },
     "retina_detect": true
 });
+
+
+
+// JavaScript to add programming languages to the dropdown menu
+document.addEventListener("DOMContentLoaded", function () {
+    const languages = ["C++", "Java", "Python", "C#", "Vanilla JS"];
+    const dropdownContent = document.getElementById("language-dropdown");
+
+    languages.forEach((language, index) => {
+        setTimeout(() => {
+            const link = document.createElement("a");
+            link.href = "#";
+            link.textContent = language;
+            dropdownContent.appendChild(link);
+
+            // Apply animations
+            setTimeout(() => {
+                link.style.opacity = "1";
+                link.style.transform = "translateY(0)";
+            }, index * 100); // Adjust the delay time as needed
+        }, index * 100); // Adjust the delay time as needed
+    });
+});
