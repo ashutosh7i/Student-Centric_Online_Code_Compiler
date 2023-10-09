@@ -11,6 +11,7 @@ body{
     box-sizing: border-box;
     overflow-x: hidden;
 
+
 }
 
 .container{
@@ -372,9 +373,9 @@ body {
 
     .main-section {
         position: relative;
-        background-color: #fff;
+        /* background-color: #fff; */
         padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
         border-radius: 5px;
         /* width: 50%; */
     }
@@ -441,7 +442,7 @@ body {
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 5  ;
 }
 
 /* Links inside the dropdown */
@@ -559,4 +560,138 @@ body {
     color: blue;
     text-decoration: none;
     font-weight: bold;
+}
+
+.features{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100vw;
+ 
+}
+.features-points h2{
+    color: blue;
+    padding: 20px;
+    font-size: 35px;
+    
+}
+.features-points{
+    width: 70%;
+    /* border: 1px solid red; */
+    padding: 30px;
+    font-size: 20px;
+    font-family: 'Roboto Slab', serif;
+    color: #1B2358;
+    margin-left: 20px;
+
+}
+.features-logo{
+    width: 30%;
+    flex: 0 0 auto;
+    margin-left: 70px;
+}
+.features-logo img{
+    width: 300px;
+    animation: slideUpDown 2s ease-in-out infinite alternate;
+}
+
+@keyframes slideUpDown {
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(-12px);
+    }
+}
+
+
+
+
+.Technologies{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    padding: 20px;
+    width: 100vw;
+ 
+}
+.Tech-points h2{
+    color: blue;
+    padding: 20px;
+    font-size: 35px;
+    
+}
+.Tech-points{
+    width: 70%;
+    /* border: 1px solid red; */
+    padding: 30px;
+    font-size: 20px;
+    font-family: 'Roboto Slab', serif;
+    color: #1B2358;
+    margin-left: 20px;
+
+}
+.features-logo{
+    width: 30%;
+    flex: 0 0 auto;
+    margin-left: 70px;
+}
+.features-logo img{
+    width: 300px;
+    animation: slideUpDown 2s ease-in-out infinite alternate;
+}
+
+@keyframes slideUpDown {
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(-12px);
+    }
+}
+
+
+.Applications{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100vw;
+ 
+}
+.App-points h2{
+    color: blue;
+    padding: 20px;
+    font-size: 35px;
+    
+}
+.App-points{
+    width: 70%;
+    /* border: 1px solid red; */
+    padding: 30px;
+    font-size: 20px;
+    font-family: 'Roboto Slab', serif;
+    color: #1B2358;
+    margin-left: 20px;
+
+}
+.features-logo{
+    width: 30%;
+    flex: 0 0 auto;
+    margin-left: 70px;
+}
+.features-logo img{
+    width: 300px;
+    animation: slideUpDown 2s ease-in-out infinite alternate;
+}
+
+@keyframes slideUpDown {
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(-12px);
+    }
 }

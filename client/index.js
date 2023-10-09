@@ -52,11 +52,9 @@ window.onload = function() {
     // INJECT CSS
     var css = document.createElement("style");
     css.type = "text/css";
-    css.innerHTML = ".typewrite > .wrap {  font-size: 24px; border: none; color:#1B2358; border-bottom: none;text-decoration: none; }";
+    css.innerHTML = ".typewrite > .wrap {  font-size: 24px; border: none; color:#1B2358; border-bottom: none; text-decoration: none; list-style : none; }";
     document.body.appendChild(css);
 };
-
-
 
 
 
@@ -175,22 +173,28 @@ particlesJS('particles-js', {
 
 
 // JavaScript to add programming languages to the dropdown menu
-document.addEventListener("DOMContentLoaded", function () {
-    const languages = ["C++", "Java", "Python", "C#", "Vanilla JS"];
-    const dropdownContent = document.getElementById("language-dropdown");
+// document.addEventListener("DOMContentLoaded", function () {
+//     const languages = ["C++", "Java", "Python", "C#", "Vanilla JS"];
+//     const dropdownContent = document.getElementById("language-dropdown");
 
-    languages.forEach((language, index) => {
-        setTimeout(() => {
-            const link = document.createElement("a");
-            link.href = "#";
-            link.textContent = language;
-            dropdownContent.appendChild(link);
+//     languages.forEach((language, index) => {
+//         setTimeout(() => {
+//             const link = document.createElement("a");
+//             link.href = "#";
+//             link.textContent = language;
+//             dropdownContent.appendChild(link);
 
-            // Apply animations
-            setTimeout(() => {
-                link.style.opacity = "1";
-                link.style.transform = "translateY(0)";
-            }, index * 100); // Adjust the delay time as needed
-        }, index * 100); // Adjust the delay time as needed
-    });
-});
+//             // Apply animations
+//             setTimeout(() => {
+//                 link.style.opacity = "1";
+//                 link.style.transform = "translateY(0)";
+//             }, index * 100); // Adjust the delay time as needed
+//         }, index * 100); // Adjust the delay time as needed
+//     });
+// });
+
+
+
+
+
+
