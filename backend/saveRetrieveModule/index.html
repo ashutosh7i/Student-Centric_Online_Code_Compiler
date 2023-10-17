@@ -13,7 +13,10 @@
         from where you left using MongoDB.
       </p>
       <br />
-
+      <span>
+        <p>UserID</p>
+        <textarea id="userId" cols="20" rows="1"></textarea>
+      </span>
       <textarea id="textarea" cols="50" rows="10"></textarea>
       <br />
 
@@ -23,18 +26,23 @@
   </body>
   <script>
     const textarea = document.getElementById("textarea");
+    const userID = document.getElementById("userId");
     const btnRetrieve = document.getElementById("btnRetrieve");
     const btnSave = document.getElementById("btnSave");
 
     // Unique id to identify
-    const uid = "04";
+
+    function getUid() {
+      var uid = userID.value;
+      return uid;
+    }
 
     let saveTimeout; // Variable to store the timeout for saving
 
     // On page load, read old data and paste it in the textarea
     window.onload = (e) => {
       e.preventDefault();
-      readFromDB(uid);
+      readFromDB(getUid());
     };
 
     // When user is done typing, save the data in the DB
@@ -46,20 +54,20 @@
 
       // Set a new timeout to save data after 1 second of inactivity
       saveTimeout = setTimeout(() => {
-        saveToDB(uid);
+        saveToDB(getUid());
       }, 1000);
     });
 
     // When user clicks "Save," save the data
     btnSave.addEventListener("click", (e) => {
       e.preventDefault();
-      saveToDB(uid);
+      saveToDB(getUid());
     });
 
     // When user clicks "Retrieve," retrieve data
     btnRetrieve.addEventListener("click", (e) => {
       e.preventDefault();
-      readFromDB(uid);
+      readFromDB(getUid());
     });
 
     // Function to save data
@@ -117,7 +125,7 @@
         console.log(responseData);
 
         // Extract the "data" property from the response
-        const data = responseData.data;
+        const data = JSON.parse(responseData.data).data;
 
         // Update the textarea with the retrieved data
         textarea.value = data;
