@@ -1,31 +1,26 @@
-import React from 'react';
-import { GoogleLogin } from 'react-google-login';
-
-// const clientId =
-//   '143343580612-ctj9bl8f1vl11ff57pvvdaolaeokr9pj.apps.googleusercontent.com';
-
-var clientId = process.env.GCP_CLIENT_ID2;
+import React from "react";
+import { GoogleLogin } from "react-google-login";
 
 function Login({ setUserData }) {
   function onSuccess(res) {
-    alert('Logged in');
-    console.log('logged in', res.profileObj);
+    alert("Logged in");
+    console.log("logged in", res.profileObj);
     setUserData(res.profileObj);
   }
 
   function onFailure(res) {
-    alert('Login failed');
+    alert("Login failed");
     console.log(res);
   }
 
   return (
     <div id="singInButton">
       <GoogleLogin
-        clientId={clientId}
+        clientId={process.env.REACT_APP_GCP_CLIENT_ID}
         buttonText="Login"
         onSuccess={onSuccess}
         onFailure={onFailure}
-        cookiePolicy={'single_host_origin'}
+        cookiePolicy={"single_host_origin"}
         isSignedIn={true}
       ></GoogleLogin>
     </div>
