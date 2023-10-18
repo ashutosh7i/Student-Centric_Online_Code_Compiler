@@ -6,10 +6,10 @@
 **Technologies**:
 - **Frontend**: HTML, CSS, JavaScript, React, ChakraUI.
 - **Backend**: Node.js, Express.
-- **Compilation**: Native Compiler for languages.
-- **Databases**: MySQL (user management) & MongoDB (code management).
+- **Compilation**: WASM (browser based compiling).
+- **Databases**: MySQL (user & code management).
 - **Hosting**: NGINX & Local network for college-wide access.
-- **Authentication**: OAuth / Google Workspace Login.
+- **Authentication**: Google OAuth2.
 
 **Planned Applications**:
 1. **Educational Institutions**:
@@ -31,5 +31,6 @@
 
 
 # Execution:
-* Figma Desing : [link](https://www.figma.com/file/v9nur0uziSTKFoJjB8nrKN/Untitled?type=design&node-id=0%3A1&mode=design&t=S5AMo840ItijwGYc-1)
+* System Desing : [link](https://excalidraw.com/#json=qb0DsEQw1FVSlGJ51Fcbd,_H-iYM9UnH1Y9iJNsqSdsA)
+* UI Desing : [link](https://www.figma.com/file/v9nur0uziSTKFoJjB8nrKN/Untitled?type=design&node-id=0%3A1&mode=design&t=S5AMo840ItijwGYc-1)
 - HomePage : [@Adityapaliwal1](https://github.com/adityapaliwal1)
