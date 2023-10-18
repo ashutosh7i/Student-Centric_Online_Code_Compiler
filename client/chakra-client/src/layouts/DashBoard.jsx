@@ -1,6 +1,6 @@
 // import React from 'react';
 
-('use client');
+("use client");
 
 import {
   IconButton,
@@ -21,42 +21,40 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import { FiMenu, FiBell, FiChevronDown } from 'react-icons/fi';
+import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 import {
   CplusplusOriginal,
   JavaOriginal,
   PythonOriginal,
   CsharpOriginal,
   Html5Original,
-} from 'devicons-react';
+} from "devicons-react";
 
-import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
+import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 
-import Login from '../components/Login';
-import Logout from '../components/Logout';
-import { gapi } from 'gapi-script';
-import { useEffect, useState } from 'react';
-
-var clientId = process.env.GCP_CLIENT_ID;
+import Login from "../components/Login";
+import Logout from "../components/Logout";
+import { gapi } from "gapi-script";
+import { useEffect, useState } from "react";
 
 const LinkItems = [
-  { name: 'C++', icon: CplusplusOriginal },
-  { name: 'Java', icon: JavaOriginal },
-  { name: 'Python', icon: PythonOriginal },
-  { name: 'C#', icon: CsharpOriginal },
-  { name: 'VanillaJS', icon: Html5Original },
+  { name: "C++", icon: CplusplusOriginal },
+  { name: "Java", icon: JavaOriginal },
+  { name: "Python", icon: PythonOriginal },
+  { name: "C#", icon: CsharpOriginal },
+  { name: "VanillaJS", icon: Html5Original },
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 60 }}
+      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
     >
@@ -64,9 +62,9 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           SOC
         </Text>
-        <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
+        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map(link => (
+      {LinkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon}>
           {link.name}
         </NavItem>
@@ -80,8 +78,8 @@ const NavItem = ({ icon, children }) => {
     <Box
       as="a"
       href="#"
-      style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}
+      style={{ textDecoration: "none" }}
+      _focus={{ boxShadow: "none" }}
     >
       <Flex
         align="center"
@@ -91,8 +89,8 @@ const NavItem = ({ icon, children }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: 'cyan.400',
-          color: 'white',
+          bg: "cyan.400",
+          color: "white",
         }}
       >
         {icon && (
@@ -100,7 +98,7 @@ const NavItem = ({ icon, children }) => {
             mr="4"
             fontSize="16"
             _groupHover={{
-              color: 'white',
+              color: "white",
             }}
             as={icon}
           />
@@ -112,15 +110,15 @@ const NavItem = ({ icon, children }) => {
 };
 
 const MobileNav = ({ onOpen }) => {
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState("");
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: clientId,
-        scope: '',
+        clientId: process.env.REACT_APP_GCP_CLIENT_ID,
+        scope: "https://www.googleapis.com/auth/userinfo.profile",
       });
     }
-    gapi.load('client:auth2', start);
+    gapi.load("client:auth2", start);
   });
   return (
     <Flex
@@ -128,13 +126,13 @@ const MobileNav = ({ onOpen }) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue("white", "gray.900")}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent={{ base: 'space-between', md: 'flex-end' }}
+      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+      justifyContent={{ base: "space-between", md: "flex-end" }}
     >
       <IconButton
-        display={{ base: 'flex', md: 'none' }}
+        display={{ base: "flex", md: "none" }}
         onClick={onOpen}
         variant="outline"
         aria-label="open menu"
@@ -142,7 +140,7 @@ const MobileNav = ({ onOpen }) => {
       />
 
       <Text
-        display={{ base: 'flex', md: 'none' }}
+        display={{ base: "flex", md: "none" }}
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold"
@@ -150,7 +148,7 @@ const MobileNav = ({ onOpen }) => {
         Logo
       </Text>
 
-      <HStack spacing={{ base: '0', md: '6' }}>
+      <HStack spacing={{ base: "0", md: "6" }}>
         <ColorModeSwitcher />
         <IconButton
           size="lg"
@@ -159,40 +157,40 @@ const MobileNav = ({ onOpen }) => {
           icon={<FiBell />}
         />
 
-        <Flex alignItems={'center'}>
+        <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
               py={2}
               transition="all 0.3s"
-              _focus={{ boxShadow: 'none' }}
+              _focus={{ boxShadow: "none" }}
             >
               <HStack>
                 <Avatar
-                  size={'sm'}
-                  src={userData.imageUrl !== null ? userData.imageUrl : ''}
+                  size={"sm"}
+                  src={userData.imageUrl !== null ? userData.imageUrl : ""}
                 />
 
                 <VStack
-                  display={{ base: 'none', md: 'flex' }}
+                  display={{ base: "none", md: "flex" }}
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2"
                 >
                   <Text fontSize="sm">
-                    {userData.name != null ? userData.name : 'Random User'}
+                    {userData.name != null ? userData.name : "Random User"}
                   </Text>
                   <Text fontSize="xs" color="gray.600">
                     Admin
                   </Text>
                 </VStack>
-                <Box display={{ base: 'none', md: 'flex' }}>
+                <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
                 </Box>
               </HStack>
             </MenuButton>
             <MenuList
-              bg={useColorModeValue('white', 'gray.900')}
-              borderColor={useColorModeValue('gray.200', 'gray.700')}
+              bg={useColorModeValue("white", "gray.900")}
+              borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
@@ -214,10 +212,10 @@ const SidebarWithHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: 'none', md: 'block' }}
+        display={{ base: "none", md: "block" }}
       />
       <Drawer
         isOpen={isOpen}

@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import Login from '../components/Login';
-import Logout from '../components/Logout';
-import { gapi } from 'gapi-script';
+import React, { useEffect, useState } from "react";
+import Login from "../components/Login";
+import Logout from "../components/Logout";
+import { gapi } from "gapi-script";
 
-const clientId = process.env.GCP_CLIENT_ID;
+const clientId = process.env.REACT_APP_GCP_CLIENT_ID;
 
 export default function Dashboard() {
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState("");
 
   useEffect(() => {
     function start() {
       gapi.client.init({
-        clientId: clientId,
-        scope: '',
+        clientId: process.env.REACT_APP_GCP_CLIENT_ID,
+        scope: "https://www.googleapis.com/auth/userinfo.profile",
       });
     }
-    gapi.load('client:auth2', start);
+    gapi.load("client:auth2", start);
   });
 
   return (
