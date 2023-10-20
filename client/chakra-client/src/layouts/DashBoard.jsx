@@ -1,7 +1,6 @@
-// import React from 'react';
-
-("use client");
-
+import { useEffect, useState } from "react";
+import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
+//
 import {
   IconButton,
   Avatar,
@@ -22,8 +21,7 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-
-import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
+//
 import {
   CplusplusOriginal,
   JavaOriginal,
@@ -31,13 +29,12 @@ import {
   CsharpOriginal,
   Html5Original,
 } from "devicons-react";
-
+//
 import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
-
-import Login from "../components/Login";
-import Logout from "../components/Logout";
+//
+import Login from "../components/Authentication/Login";
+import Logout from "../components/Authentication/Logout";
 import { gapi } from "gapi-script";
-import { useEffect, useState } from "react";
 
 const LinkItems = [
   { name: "C++", icon: CplusplusOriginal },
@@ -47,7 +44,7 @@ const LinkItems = [
   { name: "VanillaJS", icon: Html5Original },
 ];
 
-const SidebarContent = ({ onClose, ...rest }) => {
+const SidebarContent = ({ onClose }) => {
   return (
     <Box
       transition="3s ease"
@@ -194,7 +191,6 @@ const MobileNav = ({ onOpen }) => {
             >
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
               <MenuDivider />
               <MenuItem>
                 <Login setUserData={setUserData} />
@@ -208,7 +204,7 @@ const MobileNav = ({ onOpen }) => {
   );
 };
 
-const SidebarWithHeader = () => {
+export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -236,6 +232,4 @@ const SidebarWithHeader = () => {
       </Box>
     </Box>
   );
-};
-
-export default SidebarWithHeader;
+}
