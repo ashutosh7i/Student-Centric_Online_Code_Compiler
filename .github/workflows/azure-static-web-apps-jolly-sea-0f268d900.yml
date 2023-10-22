@@ -30,7 +30,6 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/client/chakra-client/" # App source code path
           output_location: "build" # Built app content directory - optional
-          app_build_command: "npm install --force"
 
           ###### End of Repository/Build Configurations ######
 
