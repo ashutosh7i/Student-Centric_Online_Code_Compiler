@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 //
 import {
@@ -35,13 +36,16 @@ import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
 import Login from "../components/Authentication/Login";
 import Logout from "../components/Authentication/Logout";
 import { gapi } from "gapi-script";
+//
+import Python from "../Pages/languages/Python";
+import Vanilla from "../Pages/languages/Vanilla";
 
 const LinkItems = [
-  { name: "C++", icon: CplusplusOriginal },
-  { name: "Java", icon: JavaOriginal },
-  { name: "Python", icon: PythonOriginal },
-  { name: "C#", icon: CsharpOriginal },
-  { name: "VanillaJS", icon: Html5Original },
+  { name: "C++", icon: CplusplusOriginal, to: "/" },
+  { name: "Java", icon: JavaOriginal, to: "/" },
+  { name: "Python", icon: PythonOriginal, to: "/python" },
+  { name: "C#", icon: CsharpOriginal, to: "/" },
+  { name: "VanillaJS", icon: Html5Original, to: "/vanilla" },
 ];
 
 const SidebarContent = ({ onClose }) => {
@@ -62,7 +66,7 @@ const SidebarContent = ({ onClose }) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} to={link.to}>
           {link.name}
         </NavItem>
       ))}
@@ -70,11 +74,11 @@ const SidebarContent = ({ onClose }) => {
   );
 };
 
-const NavItem = ({ icon, children }) => {
+const NavItem = ({ icon, children, to }) => {
   return (
     <Box
       as="a"
-      href="#"
+      href={to}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
@@ -228,7 +232,12 @@ export default function Dashboard() {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        {/* Content */}
+        <Router>
+          <Routes>
+            <Route path="/python" Component={Python} />
+            <Route path="/vanilla" Component={Vanilla} />
+          </Routes>
+        </Router>
       </Box>
     </Box>
   );
