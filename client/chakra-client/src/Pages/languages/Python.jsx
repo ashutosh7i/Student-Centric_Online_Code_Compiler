@@ -36,7 +36,7 @@ const filename = "hello.py";
 export default function Python() {
   const [sizes, setSizes] = useState([200, 100, "auto"]);
   const [code, setCode] = useState(
-    '{# Type Python Code Below\n' + 'print("👋🏻Hello, Python🐍")'
+    '# Type Python Code Below\n' + 'print("👋🏻Hello, Python🐍")'
   );
   const [output, setOutput] = useState(); // Store the Python code output
 
