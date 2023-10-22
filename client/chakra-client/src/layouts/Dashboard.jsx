@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 //
 import {
@@ -31,14 +30,14 @@ import {
   Html5Original,
 } from "devicons-react";
 //
-import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
+import { ColorModeSwitcher } from "../components/ColorModeSwitcher.jsx";
 //
-import Login from "../components/Authentication/Login";
-import Logout from "../components/Authentication/Logout";
-import { gapi } from "gapi-script";
+// import Login from "../components/Authentication/Login";
+// import Logout from "../components/Authentication/Logout";
+// import { gapi } from "gapi-script";
 //
-import Python from "../Pages/languages/Python";
-import Vanilla from "../Pages/languages/Vanilla";
+import Python from "../Pages/languages/Python.jsx";
+import Vanilla from "../Pages/languages/Vanilla.jsx";
 
 const LinkItems = [
   { name: "C++", icon: CplusplusOriginal, to: "/" },
@@ -111,16 +110,12 @@ const NavItem = ({ icon, children, to }) => {
 };
 
 const MobileNav = ({ onOpen }) => {
-  const [userData, setUserData] = useState("");
-  useEffect(() => {
-    function start() {
-      gapi.client.init({
-        clientId: process.env.REACT_APP_GCP_CLIENT_ID,
-        scope: "https://www.googleapis.com/auth/userinfo.profile",
-      });
-    }
-    gapi.load("client:auth2", start);
-  });
+  //object by google
+  const userData = {
+    name: "Aashutosh Soni",
+    imageUrl: "https://github.com/ashutosh7i.png",
+  };
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -196,10 +191,7 @@ const MobileNav = ({ onOpen }) => {
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
               <MenuDivider />
-              <MenuItem>
-                <Login setUserData={setUserData} />
-                <Logout setUserData={setUserData} />
-              </MenuItem>
+              <MenuItem>login logout</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
