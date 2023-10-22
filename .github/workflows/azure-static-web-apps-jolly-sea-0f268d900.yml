@@ -31,6 +31,9 @@ jobs:
           app_location: "/client/chakra-client" # App source code path
           api_location: "api" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
+          app_build_command: "npm install --force"
+          NPM_CONFIG_FORCE: true
+
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
