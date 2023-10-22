@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, useBreakpointValue } from "@chakra-ui/react";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import { Box } from "@chakra-ui/react";
+import Header from "./Header.jsx";
+import Sidebar from "./Sidebar.jsx";
 
 const ShowSidebar = ({ title, bgColor }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);

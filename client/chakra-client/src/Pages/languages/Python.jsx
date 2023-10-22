@@ -12,9 +12,9 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 //
-import { ColorModeSwitcher } from "../../components/ColorModeSwitcher";
-import ShowSidebar from "../../components/Sidebar/ShowSidebar";
-import ChangeFileName from "../../components/ChangeFileName";
+import { ColorModeSwitcher } from "../../components/ColorModeSwitcher.jsx";
+import ShowSidebar from "../../components/Sidebar/ShowSidebar.jsx";
+import ChangeFileName from "../../components/ChangeFileName.jsx";
 //
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
@@ -36,7 +36,7 @@ const filename = "hello.py";
 export default function Python() {
   const [sizes, setSizes] = useState([200, 100, "auto"]);
   const [code, setCode] = useState(
-    `# Type Python Code Below\n` + `print("👋🏻Hello, Python🐍")`
+    '{# Type Python Code Below\n' + 'print("👋🏻Hello, Python🐍")'
   );
   const [output, setOutput] = useState(); // Store the Python code output
 
@@ -79,8 +79,6 @@ export default function Python() {
     const pyScript = document.createElement("py-script");
 
     pyScript.textContent = code;
-
-    var out = document.getElementById("ouutput");
 
     // Append the py-script element to the body
     document.body.appendChild(pyScript);

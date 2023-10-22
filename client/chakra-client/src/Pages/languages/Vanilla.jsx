@@ -11,9 +11,9 @@ import {
   HStack,
 } from "@chakra-ui/react";
 //
-import ShowSidebar from "../../components/Sidebar/ShowSidebar";
-import { ColorModeSwitcher } from "../../components/ColorModeSwitcher";
-import ChangeFileName from "../../components/ChangeFileName";
+import ShowSidebar from "../../components/Sidebar/ShowSidebar.jsx";
+import { ColorModeSwitcher } from "../../components/ColorModeSwitcher.jsx";
+import ChangeFileName from "../../components/ChangeFileName.jsx";
 //
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
