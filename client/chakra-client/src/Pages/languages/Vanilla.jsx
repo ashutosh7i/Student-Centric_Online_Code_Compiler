@@ -22,6 +22,8 @@ import { css } from "@codemirror/lang-css";
 //
 import SplitPane, { Pane } from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
+//
+import downloadFile from "../../utils/downloadCodeFile.js";
 
 export default function Vanilla() {
   const [sizes, setSizes] = useState([33.33, 33.33, 33.33]);
@@ -120,7 +122,7 @@ export default function Vanilla() {
   }, [htmlValue, cssValue, jsValue]);
 
   //file name which will come form db
-  let filename = "Testfile";
+  let filename = "Testfile.html";
   return (
     <>
       <ShowSidebar title="Web Dev" bgColor={"#ffae17"} />
@@ -141,7 +143,12 @@ export default function Vanilla() {
         )}
         <HStack>
           <ColorModeSwitcher />
-          <Button colorScheme="blue">
+          <Button
+            colorScheme="blue"
+            onClick={() => {
+              downloadFile(output, filename);
+            }}
+          >
             {"Save  "}
             <Icon as={FaSave} />
           </Button>

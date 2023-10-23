@@ -21,6 +21,9 @@ import { python } from "@codemirror/lang-python";
 //
 import SplitPane, { Pane } from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
+//
+import copyToClipboard from "../../utils/copyToClipboard.js";
+import downloadFile from "../../utils/downloadCodeFile.js";
 
 const layoutCSS = {
   height: "100vh",
@@ -36,7 +39,7 @@ const filename = "hello.py";
 export default function Python() {
   const [sizes, setSizes] = useState([200, 100, "auto"]);
   const [code, setCode] = useState(
-    '# Type Python Code Below\n' + 'print("👋🏻Hello, Python🐍")'
+    "# Type Python Code Below\n" + 'print("👋🏻Hello, Python🐍")'
   );
   const [output, setOutput] = useState(); // Store the Python code output
 
@@ -51,9 +54,9 @@ export default function Python() {
     setIsChangeFileNameOpen(false);
   };
 
-  const onChangeCode = (val, viewUpdate) => {
-    setCode(val);
-  };
+  const onChange = React.useCallback((pythonVal, viewUpdate) => {
+    setCode(pythonVal);
+  }, []);
 
   const loadPyScript = () => {
     if (!scriptLoaded) {
@@ -101,30 +104,10 @@ export default function Python() {
       subtree: true,
     });
   };
-  function PythonCodeEditor({ code, onChangeCode }) {
-    return (
-      <div
-        style={{
-          ...layoutCSS,
-          background: useColorModeValue("gray.50", "gray.700"),
-        }}
-      >
-        <Box p={5} flex="1" minW="300px">
-          <Text>Python</Text>
-          <CodeMirror
-            value={code}
-            height={"calc(100vh - 70px)"}
-            extensions={[python({ autocomplete: true })]}
-            onChange={onChangeCode}
-            theme={useColorModeValue("light", "dark")}
-          />
-        </Box>
-      </div>
-    );
-  }
+
   return (
     <>
-      <ShowSidebar title="Python" bgColor={"#17aeff"} />
+      <ShowSidebar title="Python" bgColor={"#7b23ee"} />
       <HStack h={70} justify="space-between" w="100%" pl={10} pr={10}>
         <Text>
           {filename}
@@ -142,7 +125,12 @@ export default function Python() {
         )}
         <HStack>
           <ColorModeSwitcher />
-          <Button colorScheme="blue">
+          <Button
+            colorScheme="blue"
+            onClick={() => {
+              downloadFile(code, filename);
+            }}
+          >
             {"Save  "}
             <Icon as={FaSave} />
           </Button>
@@ -155,7 +143,23 @@ export default function Python() {
 
       <div style={{ height: "calc(100vh - 70px)" }}>
         <SplitPane sizes={sizes} onChange={(sizes) => setSizes(sizes)}>
-          <PythonCodeEditor code={code} onChangeCode={onChangeCode} />
+          <div
+            style={{
+              ...layoutCSS,
+              background: useColorModeValue("gray.50", "gray.700"),
+            }}
+          >
+            <Box p={5} flex="1" minW="300px">
+              <Text>Python</Text>
+              <CodeMirror
+                value={code}
+                height={"calc(100vh - 70px)"}
+                extensions={[python({ autocomplete: true })]}
+                onChange={onChange}
+                theme={useColorModeValue("light", "dark")}
+              />
+            </Box>
+          </div>
 
           <Pane minSize={400} maxSize="40%">
             <div style={{ ...layoutCSS, background: "green" }}>
@@ -184,6 +188,11 @@ export default function Python() {
                         w="full"
                         colorScheme="gray"
                         variant="outline"
+                        onClick={() => {
+                          copyToClipboard(
+                            document.getElementById("ouutput").value
+                          );
+                        }}
                       >
                         Copy 📋
                       </Button>
@@ -193,6 +202,9 @@ export default function Python() {
                         colorScheme="gray"
                         variant="outline"
                         id="textareaa"
+                        onClick={() => {
+                          setOutput("");
+                        }}
                       >
                         Clear 🧹
                       </Button>

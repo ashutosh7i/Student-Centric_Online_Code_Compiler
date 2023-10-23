@@ -37,7 +37,11 @@ import { ColorModeSwitcher } from "../components/ColorModeSwitcher.jsx";
 // import Logout from "../components/Authentication/Logout";
 // import { gapi } from "gapi-script";
 //
+
+import Cpp from "../Pages/languages/Cpp.jsx";
+import Java from "../Pages/languages/Java.jsx";
 import Python from "../Pages/languages/Python.jsx";
+import Cs from "../Pages/languages/Cs.jsx";
 import Vanilla from "../Pages/languages/Vanilla.jsx";
 
 const SidebarContent = ({ onClose, setActiveComponent }) => {
@@ -59,7 +63,7 @@ const SidebarContent = ({ onClose, setActiveComponent }) => {
       </Flex>
       <NavItem
         icon={CplusplusOriginal}
-        onClick={() => setActiveComponent("C++")}
+        onClick={() => setActiveComponent("Cpp")}
       >
         C++
       </NavItem>
@@ -77,7 +81,7 @@ const SidebarContent = ({ onClose, setActiveComponent }) => {
       </NavItem>
       <NavItem
         icon={Html5Original}
-        onClick={() => setActiveComponent("Vanilla Js")}
+        onClick={() => setActiveComponent("Vanilla")}
       >
         Vanilla Js
       </NavItem>
@@ -214,7 +218,7 @@ const MobileNav = ({ onOpen }) => {
 
 export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [activeComponent, setActiveComponent] = useState("Python"); // Default to Python
+  const [activeComponent, setActiveComponent] = useState("Vanilla"); // Default to VanillaJs
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -241,8 +245,11 @@ export default function Dashboard() {
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {/* Render the active component */}
+        {activeComponent === "Cpp" && <Cpp />}
+        {activeComponent === "Java" && <Java />}
         {activeComponent === "Python" && <Python />}
-        {activeComponent === "Vanilla Js" && <Vanilla />}
+        {activeComponent === "Cs" && <Cs />}
+        {activeComponent === "Vanilla" && <Vanilla />}
       </Box>
     </Box>
   );
