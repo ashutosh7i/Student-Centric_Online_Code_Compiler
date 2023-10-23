@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
 //
 import {
@@ -20,6 +20,7 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Link,
 } from "@chakra-ui/react";
 //
 import {
@@ -39,15 +40,7 @@ import { ColorModeSwitcher } from "../components/ColorModeSwitcher.jsx";
 import Python from "../Pages/languages/Python.jsx";
 import Vanilla from "../Pages/languages/Vanilla.jsx";
 
-const LinkItems = [
-  { name: "C++", icon: CplusplusOriginal, to: "/" },
-  { name: "Java", icon: JavaOriginal, to: "/" },
-  { name: "Python", icon: PythonOriginal, to: "/python" },
-  { name: "C#", icon: CsharpOriginal, to: "/" },
-  { name: "VanillaJS", icon: Html5Original, to: "/vanilla" },
-];
-
-const SidebarContent = ({ onClose }) => {
+const SidebarContent = ({ onClose, setActiveComponent }) => {
   return (
     <Box
       transition="3s ease"
@@ -64,22 +57,41 @@ const SidebarContent = ({ onClose }) => {
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} to={link.to}>
-          {link.name}
-        </NavItem>
-      ))}
+      <NavItem
+        icon={CplusplusOriginal}
+        onClick={() => setActiveComponent("C++")}
+      >
+        C++
+      </NavItem>
+      <NavItem icon={JavaOriginal} onClick={() => setActiveComponent("Java")}>
+        Java
+      </NavItem>
+      <NavItem
+        icon={PythonOriginal}
+        onClick={() => setActiveComponent("Python")}
+      >
+        Python
+      </NavItem>
+      <NavItem icon={CsharpOriginal} onClick={() => setActiveComponent("Cs")}>
+        Cs
+      </NavItem>
+      <NavItem
+        icon={Html5Original}
+        onClick={() => setActiveComponent("Vanilla Js")}
+      >
+        Vanilla Js
+      </NavItem>
     </Box>
   );
 };
 
-const NavItem = ({ icon, children, to }) => {
+const NavItem = ({ icon, children, onClick }) => {
   return (
     <Box
-      as="a"
-      href={to}
+      as="div" // Use a div instead of an anchor tag
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
+      onClick={onClick}
     >
       <Flex
         align="center"
@@ -202,12 +214,13 @@ const MobileNav = ({ onOpen }) => {
 
 export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [activeComponent, setActiveComponent] = useState("Python"); // Default to Python
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
         onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
+        setActiveComponent={setActiveComponent}
       />
       <Drawer
         isOpen={isOpen}
@@ -218,18 +231,18 @@ export default function Dashboard() {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent
+            onClose={onClose}
+            setActiveComponent={setActiveComponent}
+          />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        <Router>
-          <Routes>
-            <Route path="/python" Component={Python} />
-            <Route path="/vanilla" Component={Vanilla} />
-          </Routes>
-        </Router>
+        {/* Render the active component */}
+        {activeComponent === "Python" && <Python />}
+        {activeComponent === "Vanilla Js" && <Vanilla />}
       </Box>
     </Box>
   );
