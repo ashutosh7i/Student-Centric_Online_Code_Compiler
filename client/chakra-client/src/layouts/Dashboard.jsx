@@ -218,7 +218,7 @@ const MobileNav = ({ onOpen }) => {
 
 export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [activeComponent, setActiveComponent] = useState("Vanilla"); // Default to VanillaJs
+  const [activeComponent, setActiveComponent] = useState("Cpp"); // Default to VanillaJs
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
