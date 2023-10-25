@@ -81,7 +81,7 @@ export default function Cpp() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "https://judge0-ce.p.rapidapi.com",
+    baseURL: "http://20.205.143.172",
     params: {
       base64_encoded: "true",
       fields: "*",
@@ -89,8 +89,6 @@ export default function Cpp() {
     headers: {
       "content-type": "application/json",
       "Content-Type": "application/json",
-      "X-RapidAPI-Key": "04078fba8cmsh40f65107c5d98dap181f08jsn982cce853852",
-      "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
     },
   });
 
@@ -177,7 +175,13 @@ export default function Cpp() {
                 break;
               case "Internal Error":
                 console.log("Internal Server Error:", response2.data);
-                setOutput("Internal Server Error");
+                setOutput(
+                  `Internal Server Error\n\n
+                ${base64.decode(response2.data.compile_output)}
+                \n\n${base64.decode(response2.data.message)}
+                \n\n${base64.decode(response2.data.stderr)}
+                \n\n Output=>\n ${base64.decode(response2.data.stdout)}`
+                );
                 break;
               case "Exec Format Error":
                 console.log("Exec Format Error:", response2.data);
