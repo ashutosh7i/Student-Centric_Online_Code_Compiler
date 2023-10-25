@@ -54,3 +54,5 @@
   here are links to solution- <br>
   https://stackoverflow.com/a/55541435/3051080
   https://stackoverflow.com/questions/62378045/
+
+* Compilation server Deployment: successfully deployed compilation api on azure using docker✅.
