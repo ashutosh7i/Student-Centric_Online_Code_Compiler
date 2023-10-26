@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaEdit, FaSave, FaPlay } from "react-icons/fa";
+//
 import {
   VStack,
   Box,
@@ -15,6 +16,7 @@ import {
 import { ColorModeSwitcher } from "../../components/ColorModeSwitcher.jsx";
 import ShowSidebar from "../../components/Sidebar/ShowSidebar.jsx";
 import ChangeFileName from "../../components/ChangeFileName.jsx";
+import LoadingModal from "../../components/LoadingModal.jsx";
 //
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
@@ -24,6 +26,9 @@ import "split-pane-react/esm/themes/default.css";
 //
 import copyToClipboard from "../../utils/copyToClipboard.js";
 import downloadFile from "../../utils/downloadCodeFile.js";
+//
+import axios from "axios";
+var base64 = require("base-64");
 
 const layoutCSS = {
   height: "100vh",
@@ -39,11 +44,15 @@ const filename = "hello.py";
 export default function Python() {
   const [sizes, setSizes] = useState([200, 100, "auto"]);
   const [code, setCode] = useState(
-    "# Type Python Code Below\n" + 'print("👋🏻Hello, Python🐍")'
+    "# Type Python Code Below\n" + 'print("Hello, Python")'
   );
-  const [output, setOutput] = useState(); // Store the Python code output
+  const [output, setOutput] = useState(
+    "Your Output & Errors will appear here."
+  ); // Store the Python code output
 
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [input, setInput] = useState("7"); //Store the input from user
+  const [isRunning, setisRunning] = useState(false); //Store the state of running, used to prevent multi click on run
+  const [isLoading, setIsLoading] = useState(false); //state for loading modal
 
   //handlers for change file name prompt
   const [isChangeFileNameOpen, setIsChangeFileNameOpen] = useState(false);
@@ -54,56 +63,146 @@ export default function Python() {
     setIsChangeFileNameOpen(false);
   };
 
-  const onChange = React.useCallback((pythonVal, viewUpdate) => {
-    setCode(pythonVal);
+  const updateCode = React.useCallback((codeVal, viewUpdate) => {
+    // console.log(codeVal);
+    setCode(codeVal);
   }, []);
 
-  const loadPyScript = () => {
-    if (!scriptLoaded) {
-      // Load the PyScript script on the first run
-      const pyscriptScript = document.createElement("script");
-      pyscriptScript.src = "https://pyscript.net/unstable/pyscript.js";
-      pyscriptScript.defer = true;
-      document.head.appendChild(pyscriptScript);
-      console.log("---------------");
-      console.log(pyscriptScript);
-      console.log("+++++++++++++++");
-      setScriptLoaded(true);
-    }
-  };
+  const updateInput = React.useCallback((inputVal, viewUpdate2) => {
+    // console.log(inputVal);
+    setInput(inputVal);
+  }, []);
 
-  const runCode = () => {
-    loadPyScript();
+  //setting up a axios instance
+  const api = axios.create({
+    baseURL: "http://20.205.143.172:2358",
+    params: {
+      base64_encoded: "true",
+      fields: "*",
+    },
+    headers: {
+      "content-type": "application/json",
+      "Content-Type": "application/json",
+    },
+  });
 
-    // Clear the previous output
-    setOutput("Executing code🛠️...");
+  //running code
+  async function runCode() {
+    //if code is not running already
+    if (isRunning) {
+      alert("code already running");
+      console.log("code already running");
+    } else {
+      //then only running the code
+      // Clear the previous output
+      setOutput("Executing code🛠️...");
+      setisRunning(true);
 
-    // Execute the Python code
-    const pyScript = document.createElement("py-script");
+      //submitting the code to api
+      try {
+        const response1 = await api.post("/submissions", {
+          language_id: 70,
+          source_code: base64.encode(code),
+          stdin: base64.encode(input),
+        });
 
-    pyScript.textContent = code;
+        //logging out the unique token to each code
+        console.log("Response 1 Token:", response1.data.token);
 
-    // Append the py-script element to the body
-    document.body.appendChild(pyScript);
+        //fetching output from api
+        if (response1.data.token) {
+          //polling the server untill compilation is completed or failed.
+          let status = "Processing";
+          while (status === "Processing" || status === "In Queue") {
+            const response2 = await api.get(
+              `/submissions/${response1.data.token}`
+            );
+            status = response2.data.status.description;
 
-    // Capture and format the output
-    const observer = new MutationObserver(() => {
-      const unformattedOutput = document.querySelector(
-        "div[class='py-script-output']"
-      );
-      setOutput(unformattedOutput);
-      if (unformattedOutput) {
-        const formattedOutput = unformattedOutput.textContent;
+            //diffrent outputs based on compilation
+            switch (status) {
+              case "Accepted":
+                console.log("Accepted:", base64.decode(response2.data.stdout));
+                setOutput(base64.decode(response2.data.stdout));
+                break;
+              case "Wrong Answer":
+                console.log("Wrong Answer:", response2.data);
+                setOutput("Wrong Answer");
+                break;
+              case "Time Limit Exceeded":
+                console.log("Time Limit Exceeded:", response2.data);
+                alert("Time Limit Exceeded");
+                setOutput(
+                  `Time Limit Exceeded\n\n
+                ${base64.decode(response2.data.compile_output)}
+                \n\n${base64.decode(response2.data.message)}
+                \n\n${base64.decode(response2.data.stderr)}
+                \n\n Output=>\n ${base64.decode(response2.data.stdout)}`
+                );
+                break;
+              case "Compilation Error":
+                console.log("Compilation Error:", response2.data);
+                alert("Compilation Error");
+                setOutput(
+                  `Compilation Error\n
+                ${base64.decode(response2.data.compile_output)}
+                \n\n${base64.decode(response2.data.message)}
+                \n\n${base64.decode(response2.data.stderr)}
+                \n\n Output=>\n ${base64.decode(response2.data.stdout)}`
+                );
+                break;
+              case "Runtime Error (SIGSEGV)":
+              case "Runtime Error (SIGXFSZ)":
+              case "Runtime Error (SIGFPE)":
+              case "Runtime Error (SIGABRT)":
+              case "Runtime Error (NZEC)":
+              case "Runtime Error (Other)":
+                console.log("Runtime Error:", response2.data);
+                alert("Runtime Error");
+                setOutput(
+                  `${response2.data.status.description}
+                ${base64.decode(response2.data.compile_output)}
+                \n\n${base64.decode(response2.data.message)}
+                \n\n${base64.decode(response2.data.stderr)}
+                \n\n Output=>\n ${base64.decode(response2.data.stdout)}`
+                );
+                break;
+              case "Internal Error":
+                console.log("Internal Server Error:", response2.data);
+                setOutput(
+                  `Internal Server Error\n\n
+                ${base64.decode(response2.data.compile_output)}
+                \n\n${base64.decode(response2.data.message)}
+                \n\n${base64.decode(response2.data.stderr)}
+                \n\n Output=>\n ${base64.decode(response2.data.stdout)}`
+                );
+                break;
+              case "Exec Format Error":
+                console.log("Exec Format Error:", response2.data);
+                setOutput("Exec Format Error");
+                break;
+              default:
+                console.log(`Status: ${status}`);
+                setOutput(`${status}`);
+                break;
+            }
 
-        observer.disconnect();
+            if (status === "Processing" || status === "In Queue") {
+              // Add a delay before making the next request (e.g., every 1.2 seconds)
+              await new Promise((resolve) => setTimeout(resolve, 1200));
+            }
+          }
+          setisRunning(false);
+        } else {
+          console.error("No token found in Response 1.");
+          setisRunning(false);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setisRunning(false);
       }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-    });
-  };
+    }
+  }
 
   return (
     <>
@@ -123,6 +222,8 @@ export default function Python() {
         {isChangeFileNameOpen && (
           <ChangeFileName currentName={filename} onClose={closePrompt} />
         )}
+        {/* Loading modal, will be used during compilation process. */}
+        {isRunning && <LoadingModal />}
         <HStack>
           <ColorModeSwitcher />
           <Button
@@ -134,7 +235,15 @@ export default function Python() {
             {"Save  "}
             <Icon as={FaSave} />
           </Button>
-          <Button colorScheme="green" onClick={runCode}>
+          <Button
+            colorScheme="green"
+            variant={isRunning ? "ghost" : "solid"}
+            onClick={() => {
+              if (!isRunning) {
+                runCode();
+              }
+            }}
+          >
             <Icon as={FaPlay} />
             {"Run "}
           </Button>
@@ -155,7 +264,7 @@ export default function Python() {
                 value={code}
                 height={"calc(100vh - 70px)"}
                 extensions={[python({ autocomplete: true })]}
-                onChange={onChange}
+                onChange={updateCode}
                 theme={useColorModeValue("light", "dark")}
               />
             </Box>
@@ -175,6 +284,7 @@ export default function Python() {
                     <Text>Output</Text>
                     <Box border={"1px"} h={200}>
                       <Textarea
+                        fontFamily="monospace"
                         border={"1px"}
                         resize="none"
                         h="100%"
@@ -212,9 +322,17 @@ export default function Python() {
                     <Box p={2}></Box>
                     <Text>Custom Input</Text>
                     <Box h={100}>
-                      <Textarea border={"1px"} resize="none" h="100%">
-                        here
-                      </Textarea>
+                      <Textarea
+                        fontFamily="monospace"
+                        value={input}
+                        onChange={(event) => {
+                          const newValue = event.target.value;
+                          updateInput(newValue);
+                        }}
+                        border={"1px"}
+                        resize="none"
+                        h="100%"
+                      ></Textarea>
                     </Box>
                   </Box>
                 </VStack>

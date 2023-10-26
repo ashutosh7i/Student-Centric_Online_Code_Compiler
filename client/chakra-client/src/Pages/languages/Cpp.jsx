@@ -48,8 +48,11 @@ export default function Cpp() {
       "#include <iostream>\n" +
       "using namespace std;\n" +
       "\n" +
-      "int main() {\n" +
-      '    cout << "Hello World!";\n' +
+      "int main() {\n\n" +
+      '    cout << "Hello World!";\n\n' +
+      "    int userInput;\n\n" +
+      "    cin>>userInput;\n" +
+      "    cout<<'You entered'<<userInput;\n\n" +
       "    return 0;\n" +
       "}"
   );
@@ -81,7 +84,7 @@ export default function Cpp() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "http://20.205.143.172",
+    baseURL: "http://20.205.143.172:2358",
     params: {
       base64_encoded: "true",
       fields: "*",
