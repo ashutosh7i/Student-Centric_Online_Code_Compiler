@@ -84,7 +84,7 @@ export default function Cpp() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "https://20.205.143.172:2358",
+    baseURL: "https://soc.ashutosh7i.dev:2358",
     params: {
       base64_encoded: "true",
       fields: "*",
