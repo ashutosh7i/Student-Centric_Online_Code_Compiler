@@ -85,9 +85,11 @@ export default function Cpp() {
   //setting up a axios instance
   const api = axios.create({
     baseURL: "https://soc.ashutosh7i.dev:2358",
+    crossDomain: true,
     params: {
       base64_encoded: "true",
       fields: "*",
+      crossDomain: true,
     },
     headers: {
       "content-type": "application/json",
