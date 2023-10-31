@@ -81,7 +81,7 @@ export default function Java() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "http://20.205.143.172:2358",
+    baseURL: "https://soc.centralindia.cloudapp.azure.com/api",
     params: {
       base64_encoded: "true",
       fields: "*",

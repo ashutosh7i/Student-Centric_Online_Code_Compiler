@@ -84,7 +84,7 @@ export default function Cpp() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "https://soc.ashutosh7i.dev:2358",
+    baseURL: "https://soc.centralindia.cloudapp.azure.com/api/",
     crossDomain: true,
     params: {
       base64_encoded: "true",
