@@ -411,13 +411,7 @@ export default function HomePage() {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: "column", sm: "row" }}
             >
-              <Link
-                to={
-                  // user ?
-                  "/dashboard"
-                  // : "/signin"
-                }
-              >
+              <Link to={"/dashboard"}>
                 <Button
                   rounded={"full"}
                   size={"lg"}

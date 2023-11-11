@@ -19,6 +19,7 @@ import SignIn from "./components/Authentication/SignIn";
 import SignUp from "./components/Authentication/Signup";
 //
 import DesktopOnly from "./components/DesktopOnly";
+import ProtectedRoute from "./components/utils/ProtectedRoute";
 
 function App() {
   const [isLargerThanMD] = useMediaQuery("(min-width: 48em)");
@@ -30,12 +31,60 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" exact element={<HomePage />} />
-              <Route path="/dashboard" exact element={<Dashboard />} />
-              <Route path="/cpp/:userId/:codeId" exact element={<Cpp />} />
-              <Route path="/java/:userId/:codeId" exact element={<Java />} />
-              <Route path="/py/:userId/:codeId" exact element={<Python />} />
-              <Route path="/cs/:userId/:codeId" exact element={<Cs />} />
-              <Route path="/html/:userId/:codeId" exact element={<Vanilla />} />
+              <Route
+                path="/dashboard"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/cpp/:userId/:codeId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Cpp />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/java/:userId/:codeId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Java />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/py/:userId/:codeId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Python />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/cs/:userId/:codeId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Cs />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/html/:userId/:codeId"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Vanilla />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/signup" exact element={<SignUp />} />
               <Route path="/signin" exact element={<SignIn />} />
             </Routes>
