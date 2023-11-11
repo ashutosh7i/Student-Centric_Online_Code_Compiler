@@ -1,256 +1,137 @@
 import { useState } from "react";
-import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 //
 import {
-  IconButton,
   Avatar,
   Box,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
   CloseButton,
-  Flex,
-  HStack,
-  VStack,
-  Icon,
-  useColorModeValue,
-  Text,
+  Container,
   Drawer,
   DrawerContent,
-  useDisclosure,
+  Flex,
+  FormControl,
+  Grid,
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
-  Link,
+  SimpleGrid,
+  Stack,
+  StackDivider,
+  Stat,
+  StatLabel,
+  StatNumber,
+  Text,
+  useColorModeValue,
+  useDisclosure,
+  useMediaQuery,
+  VStack,
 } from "@chakra-ui/react";
 //
 import {
   CplusplusOriginal,
-  JavaOriginal,
-  PythonOriginal,
   CsharpOriginal,
   Html5Original,
+  JavaOriginal,
+  PythonOriginal,
 } from "devicons-react";
 //
-import { ColorModeSwitcher } from "../components/ColorModeSwitcher.jsx";
+import {
+  FiBell,
+  FiChevronDown,
+  FiDelete,
+  FiEdit,
+  FiEdit2,
+  FiEdit3,
+  FiMenu,
+  FiPenTool,
+} from "react-icons/fi";
 //
-// import Login from "../components/Authentication/Login";
-// import Logout from "../components/Authentication/Logout";
-// import { gapi } from "gapi-script";
-//
+import Navbar from "../components/Navbar.jsx";
+import Sidebar from "../components/Sidebar.jsx";
+import DeleteFile from "../components/utils/DeleteFile.jsx";
+import ServerStats from "../components/utils/ServerStats.jsx";
 
-import Cpp from "../Pages/languages/Cpp.jsx";
-import Java from "../Pages/languages/Java.jsx";
-import Python from "../Pages/languages/Python.jsx";
-import Cs from "../Pages/languages/Cs.jsx";
-import Vanilla from "../Pages/languages/Vanilla.jsx";
-
-const SidebarContent = ({ onClose, setActiveComponent }) => {
-  return (
-    <Box
-      transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
-      pos="fixed"
-      h="full"
-    >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          SOC
-        </Text>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-      </Flex>
-      <NavItem
-        icon={CplusplusOriginal}
-        onClick={() => setActiveComponent("Cpp")}
-      >
-        C++
-      </NavItem>
-      <NavItem icon={JavaOriginal} onClick={() => setActiveComponent("Java")}>
-        Java
-      </NavItem>
-      <NavItem
-        icon={PythonOriginal}
-        onClick={() => setActiveComponent("Python")}
-      >
-        Python
-      </NavItem>
-      <NavItem icon={CsharpOriginal} onClick={() => setActiveComponent("Cs")}>
-        Cs
-      </NavItem>
-      <NavItem
-        icon={Html5Original}
-        onClick={() => setActiveComponent("Vanilla")}
-      >
-        Vanilla Js
-      </NavItem>
-    </Box>
-  );
+const iconMapping = {
+  cpp: CplusplusOriginal,
+  java: JavaOriginal,
+  py: PythonOriginal,
+  cs: CsharpOriginal,
+  html: Html5Original,
 };
 
-const NavItem = ({ icon, children, onClick }) => {
-  return (
-    <Box
-      as="div" // Use a div instead of an anchor tag
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-      onClick={onClick}
-    >
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: "cyan.400",
-          color: "white",
-        }}
-      >
-        {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
-    </Box>
-  );
-};
-
-const MobileNav = ({ onOpen }) => {
-  //object by google
-  const userData = {
-    name: "Aashutosh Soni",
-    imageUrl: "https://github.com/ashutosh7i.png",
+function CodeFile({ fileName, lastOpened }) {
+  const navigate = useNavigate();
+  const handleEditClick = (e) => {
+    e.preventDefault();
+    navigate(`/${fileName.split(".").pop()}/user1/${fileName}`);
   };
 
+  const fileExtension = fileName.split(".").pop();
+  const IconComponent = iconMapping[fileExtension];
+
   return (
-    <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 4 }}
-      height="20"
-      alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-      justifyContent={{ base: "space-between", md: "flex-end" }}
-    >
-      <IconButton
-        display={{ base: "flex", md: "none" }}
-        onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
-        icon={<FiMenu />}
-      />
-
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
-
-      <HStack spacing={{ base: "0", md: "6" }}>
-        <ColorModeSwitcher />
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
-
-        <Flex alignItems={"center"}>
-          <Menu>
-            <MenuButton
-              py={2}
-              transition="all 0.3s"
-              _focus={{ boxShadow: "none" }}
-            >
-              <HStack>
-                <Avatar
-                  size={"sm"}
-                  src={userData.imageUrl !== null ? userData.imageUrl : ""}
-                />
-
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
-                >
-                  <Text fontSize="sm">
-                    {userData.name != null ? userData.name : "Random User"}
-                  </Text>
-                  <Text fontSize="xs" color="gray.600">
-                    Admin
-                  </Text>
-                </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
-                  <FiChevronDown />
-                </Box>
-              </HStack>
-            </MenuButton>
-            <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuDivider />
-              <MenuItem>login logout</MenuItem>
-            </MenuList>
-          </Menu>
-        </Flex>
+    <HStack justify="space-between">
+      <HStack spacing={1}>
+        {IconComponent && <Icon as={IconComponent} size={20} />}
+        <Heading size="xs" align="start" textTransform="capitalize">
+          {fileName}
+        </Heading>
       </HStack>
-    </Flex>
+
+      <HStack spacing={4}>
+        <Text fontSize="sm">{lastOpened}</Text>
+        <Button colorScheme="green" variant="solid" onClick={handleEditClick}>
+          <Icon as={FiEdit2} boxSize={5} />
+        </Button>
+        <DeleteFile />
+      </HStack>
+    </HStack>
   );
-};
+}
 
 export default function Dashboard() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [activeComponent, setActiveComponent] = useState("Cpp"); // Default to VanillaJs
-
+  const [isLargerThanMD] = useMediaQuery("(min-width: 65em)"); // 48em is equivalent to 'md' in Chakra UI
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      <SidebarContent
-        onClose={() => onClose}
-        setActiveComponent={setActiveComponent}
-      />
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full"
-      >
-        <DrawerContent>
-          <SidebarContent
-            onClose={onClose}
-            setActiveComponent={setActiveComponent}
-          />
-        </DrawerContent>
-      </Drawer>
-      {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        {/* Render the active component */}
-        {activeComponent === "Cpp" && <Cpp />}
-        {activeComponent === "Java" && <Java />}
-        {activeComponent === "Python" && <Python />}
-        {activeComponent === "Cs" && <Cs />}
-        {activeComponent === "Vanilla" && <Vanilla />}
+    <>
+      <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+        <Navbar />
+        <Sidebar />
+
+        <Container mx={60} p="4">
+          <Card>
+            <CardHeader>
+              <Center>
+                <Heading size="md">Your Activity</Heading>
+              </Center>
+            </CardHeader>
+
+            <CardBody>
+              <Stack divider={<StackDivider />} spacing="4">
+                <CodeFile fileName={"ashutosh.cpp"} lastOpened={"5 min ago"} />
+                <CodeFile fileName={"tst.java"} lastOpened={"5 min ago"} />
+                <CodeFile fileName={"ml.py"} lastOpened={"5 min ago"} />
+                <CodeFile fileName={"pattern.cs"} lastOpened={"5 min ago"} />
+                <CodeFile fileName={"ash.html"} lastOpened={"5 min ago"} />
+              </Stack>
+            </CardBody>
+          </Card>
+        </Container>
+        {isLargerThanMD && <ServerStats />}
+        {/* <ServerStats /> */}
       </Box>
-    </Box>
+    </>
   );
 }

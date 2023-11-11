@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { FaEdit, FaSave, FaPlay } from "react-icons/fa";
+//
+import { useParams } from "react-router-dom";import { FaEdit, FaSave, FaPlay } from "react-icons/fa";
+//
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
+import { html } from "@codemirror/lang-html";
+import { css } from "@codemirror/lang-css";
+//
+import SplitPane, { Pane } from "split-pane-react";
+import "split-pane-react/esm/themes/default.css";
+//
+import downloadFile from "../../utils/downloadCodeFile.js";
 //
 import {
   IconButton,
@@ -11,21 +22,15 @@ import {
   HStack,
 } from "@chakra-ui/react";
 //
-import ShowSidebar from "../../components/Sidebar/ShowSidebar.jsx";
-import { ColorModeSwitcher } from "../../components/ColorModeSwitcher.jsx";
-import ChangeFileName from "../../components/ChangeFileName.jsx";
-//
-import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
-import { html } from "@codemirror/lang-html";
-import { css } from "@codemirror/lang-css";
-//
-import SplitPane, { Pane } from "split-pane-react";
-import "split-pane-react/esm/themes/default.css";
-//
-import downloadFile from "../../utils/downloadCodeFile.js";
+import ShowSidebar from "../../components/QuickAccess/ShowSidebar.jsx";
+import { ColorModeSwitcher } from "../../components/utils/ColorModeSwitcher.jsx";
+import ChangeFileName from "../../components/utils/ChangeFileName.jsx";
 
 export default function Vanilla() {
+  const { userId, codeId } = useParams();
+  let filename = codeId;
+  console.log(codeId);
+
   const [sizes, setSizes] = useState([33.33, 33.33, 33.33]);
   const [output, setOutput] = useState(""); // Store the rendered output
 
@@ -121,8 +126,6 @@ export default function Vanilla() {
     setOutput(text);
   }, [htmlValue, cssValue, jsValue]);
 
-  //file name which will come form db
-  let filename = "Testfile.html";
   return (
     <>
       <ShowSidebar title="Web Dev" bgColor={"#ffae17"} />

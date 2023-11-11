@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+//
 import { Box } from "@chakra-ui/react";
+//
 import Header from "./Header.jsx";
 import Sidebar from "./Sidebar.jsx";
 
@@ -20,7 +22,7 @@ const ShowSidebar = ({ title, bgColor }) => {
         <Header
           showSidebarButton={variants?.navigationButton}
           onShowSidebar={toggleSidebar}
-          title={title} // Pass the title as a prop to the Header
+          title={title} // Title as a prop to the Header
           bgColor={bgColor}
         />
       </Box>

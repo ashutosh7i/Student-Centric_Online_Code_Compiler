@@ -1,5 +1,5 @@
-//loading modal to be displayed during code process
 import React, { useState } from "react";
+//
 import {
   Modal,
   ModalOverlay,
@@ -9,6 +9,7 @@ import {
   Spacer,
   Center,
 } from "@chakra-ui/react";
+//
 import { Dna } from "react-loader-spinner";
 
 export default function LoadingModal() {
@@ -21,10 +22,7 @@ export default function LoadingModal() {
         isCentered
         finalFocusRef={null}
       >
-        <ModalOverlay
-          bg="Alpha.300"
-          backdropFilter="blur(1px)"
-        />
+        <ModalOverlay bg="Alpha.300" backdropFilter="blur(1px)" />
         <ModalContent>
           <ModalBody>
             <Center>

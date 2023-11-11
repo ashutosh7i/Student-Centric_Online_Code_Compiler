@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+//
 import {
   Button,
   FormControl,
@@ -8,7 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-export default function CustomPrompt({ currentName, onClose }) {
+export default function ChangeFileName({ currentName, onClose }) {
   const [newName, setNewName] = useState(currentName);
 
   const updateFileName = () => {

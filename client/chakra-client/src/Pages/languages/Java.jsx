@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import { FaEdit, FaSave, FaPlay } from "react-icons/fa";
+//
+import { useParams } from "react-router-dom";
+//
+import axios from "axios";
+//
+import CodeMirror from "@uiw/react-codemirror";
+import { java } from "@codemirror/lang-java";
+//
+import SplitPane, { Pane } from "split-pane-react";
+import "split-pane-react/esm/themes/default.css";
+//
+import copyToClipboard from "../../utils/copyToClipboard.js";
+import downloadFile from "../../utils/downloadCodeFile.js";
 //
 import {
   VStack,
@@ -13,23 +25,14 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 //
-import { ColorModeSwitcher } from "../../components/ColorModeSwitcher.jsx";
-import ShowSidebar from "../../components/Sidebar/ShowSidebar.jsx";
-import ChangeFileName from "../../components/ChangeFileName.jsx";
-import LoadingModal from "../../components/LoadingModal.jsx";
+import { FaEdit, FaSave, FaPlay } from "react-icons/fa";
 //
-import CodeMirror from "@uiw/react-codemirror";
-import { java } from "@codemirror/lang-java";
-//
-import SplitPane, { Pane } from "split-pane-react";
-import "split-pane-react/esm/themes/default.css";
-//
-import copyToClipboard from "../../utils/copyToClipboard.js";
-import downloadFile from "../../utils/downloadCodeFile.js";
-//
-import axios from "axios";
-var base64 = require("base-64");
+import { ColorModeSwitcher } from "../../components/utils/ColorModeSwitcher.jsx";
+import ShowSidebar from "../../components/QuickAccess/ShowSidebar.jsx";
+import ChangeFileName from "../../components/utils/ChangeFileName.jsx";
+import LoadingModal from "../../components/utils/LoadingModal.jsx";
 
+var base64 = require("base-64");
 const layoutCSS = {
   height: "100vh",
   display: "flex",
@@ -39,9 +42,12 @@ const layoutCSS = {
 };
 
 //filename will come form db
-const filename = "hello.java";
+// const filename = "hello.java";
 
 export default function Java() {
+  const { userId, codeId } = useParams();
+  let filename = codeId;
+  console.log(codeId);
   const [sizes, setSizes] = useState([200, 100, "auto"]);
   const [code, setCode] = useState(
     "// Type Java Code Below\n" +
