@@ -1,6 +1,5 @@
 [![wakatime](https://wakatime.com/badge/github/ashutosh7i/Student-Centric_Online_Code_Compiler.svg)](https://wakatime.com/@Ashutosh7i/projects/frclgtzjob) &nbsp;&nbsp;&nbsp;&nbsp;
-[![Azure Static Web Apps CI/CD](https://github.com/ashutosh7i/Student-Centric_Online_Code_Compiler/actions/workflows/azure-static-web-apps-ashy-glacier-0f98efe00.yml/badge.svg)](https://github.com/ashutosh7i/Student-Centric_Online_Code_Compiler/actions)
-
+[![Azure Static Web Apps CI/CD](https://github.com/ashutosh7i/Student-Centric_Online_Code_Compiler/actions/workflows/azure-static-web-apps-thankful-stone-0e50d4900.yml/badge.svg?branch=main)](https://github.com/ashutosh7i/Student-Centric_Online_Code_Compiler/actions/workflows/azure-static-web-apps-thankful-stone-0e50d4900.yml)
 # Student-Centric Online Code Compiler
 
 (College Minor Project)
