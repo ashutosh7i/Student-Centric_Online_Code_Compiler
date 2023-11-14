@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //
 import {
@@ -38,6 +38,7 @@ import {
   useDisclosure,
   useMediaQuery,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 //
 import {
@@ -63,6 +64,13 @@ import Navbar from "../components/Navbar.jsx";
 import Sidebar from "../components/Sidebar.jsx";
 import DeleteFile from "../components/utils/DeleteFile.jsx";
 import ServerStats from "../components/utils/ServerStats.jsx";
+//
+import { useRecoilValue } from "recoil";
+import { userState } from "../state.js";
+//
+import getUserFiles from "../utils/getUserFiles.js";
+//
+import moment from "moment";
 
 const iconMapping = {
   cpp: CplusplusOriginal,
@@ -72,11 +80,29 @@ const iconMapping = {
   html: Html5Original,
 };
 
-function CodeFile({ fileName, lastOpened }) {
+function CodeFile({ user, fileName, lastOpened }) {
   const navigate = useNavigate();
+  const toast = useToast();
+
   const handleEditClick = (e) => {
     e.preventDefault();
-    navigate(`/${fileName.split(".").pop()}/user1/${fileName}`);
+    toast({
+      title: "Navigating",
+      description: `Opening ${fileName} for editing.`,
+      status: "info",
+      duration: 1000,
+      isClosable: true,
+    });
+    setTimeout(() => {
+      navigate(`/${fileName.split(".").pop()}/${user}/${fileName}`);
+      toast({
+        title: "🚀Happy Coding👨🏻‍💻!",
+        description: `Opened ${fileName} for editing.`,
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    }, 1000);
   };
 
   const fileExtension = fileName.split(".").pop();
@@ -96,14 +122,41 @@ function CodeFile({ fileName, lastOpened }) {
         <Button colorScheme="green" variant="solid" onClick={handleEditClick}>
           <Icon as={FiEdit2} boxSize={5} />
         </Button>
-        <DeleteFile />
+        <DeleteFile uid={user} actualFilename={fileName} />
       </HStack>
     </HStack>
   );
 }
 
 export default function Dashboard() {
+  const user = useRecoilValue(userState);
+  const [userFiles, setUserFiles] = useState([]);
+  const toast = useToast();
+
+  useEffect(() => {
+    const fetchUserFiles = async () => {
+      const files = await getUserFiles(user.id);
+      setUserFiles(files);
+    };
+
+    fetchUserFiles();
+  }, [user.id]);
+
+  useEffect(() => {
+    const newUser = userFiles.some((file) => file.filename === "New User");
+    if (newUser) {
+      toast({
+        title: "✨Welcome to SOC🚀",
+        description: `Click on the "New File" button to get started.`,
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    }
+  }, [userFiles, toast]);
+
   const [isLargerThanMD] = useMediaQuery("(min-width: 65em)"); // 48em is equivalent to 'md' in Chakra UI
+
   return (
     <>
       <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -120,11 +173,20 @@ export default function Dashboard() {
 
             <CardBody>
               <Stack divider={<StackDivider />} spacing="4">
-                <CodeFile fileName={"ashutosh.cpp"} lastOpened={"5 min ago"} />
-                <CodeFile fileName={"tst.java"} lastOpened={"5 min ago"} />
-                <CodeFile fileName={"ml.py"} lastOpened={"5 min ago"} />
-                <CodeFile fileName={"pattern.cs"} lastOpened={"5 min ago"} />
-                <CodeFile fileName={"ash.html"} lastOpened={"5 min ago"} />
+                {userFiles.map((file) =>
+                  file.filename === "New User" ? (
+                    <Center>
+                      <Text>Welcome, new user</Text>
+                    </Center>
+                  ) : (
+                    <CodeFile
+                      user={user.id}
+                      key={file.filename}
+                      fileName={file.filename}
+                      lastOpened={moment(file.timestamp).fromNow()}
+                    />
+                  )
+                )}
               </Stack>
             </CardBody>
           </Card>

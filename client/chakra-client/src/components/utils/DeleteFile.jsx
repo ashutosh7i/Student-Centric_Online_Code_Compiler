@@ -22,23 +22,34 @@ import {
 import { MdDeleteForever } from "react-icons/md";
 import { useToast } from "@chakra-ui/react";
 import { MdDelete } from "react-icons/md";
+//
+import deleteUserFile from "../../utils/deleteUserFile";
 
-export default function DeleteFile() {
+export default function DeleteFile({ uid, actualFilename }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [filename, setFilename] = useState("");
   const toast = useToast();
 
-  const deleteFile = () => {
-    if (filename) {
-      // You can add your delete logic here
-      console.log("File deleted:", filename);
-      toast({
-        title: "File Deleted",
-        description: `${filename} has been deleted.`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+  const deleteFile = async () => {
+    if (filename && filename === actualFilename) {
+      try {
+        await deleteUserFile(uid, actualFilename); // You need to get the uid from somewhere
+        toast({
+          title: "File Deleted",
+          description: `${actualFilename} has been deleted.`,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      } catch (error) {
+        toast({
+          title: "Error Deleting File",
+          description: error.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
       onClose();
     } else {
       toast({
@@ -81,7 +92,7 @@ export default function DeleteFile() {
               fontSize={"md"}
               color={useColorModeValue("gray.800", "gray.400")}
             >
-              Type the filename to confirm:
+              Type the filename in lowercase to confirm:
             </Text>
             <FormControl id="filename">
               <Input

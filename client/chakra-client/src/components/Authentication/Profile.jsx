@@ -1,3 +1,9 @@
+import { useState, useEffect } from "react";
+//
+import { useRecoilValue } from "recoil";
+import { userState } from "../../state";
+import { Link } from "react-router-dom";
+//
 import {
   Heading,
   Avatar,
@@ -10,8 +16,23 @@ import {
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
+//
+import getUserFiles from "../../utils/getUserFiles";
 
 export default function Profile() {
+  const user = useRecoilValue(userState);
+
+  const [totalCodes, setTotalCodes] = useState(0);
+  useEffect(() => {
+    getUserFiles(user.id)
+      .then((files) => {
+        setTotalCodes(files.length);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [user.id]);
+
   return (
     <Center py={6}>
       <Box
@@ -34,9 +55,7 @@ export default function Profile() {
         <Flex justify={"center"} mt={-12}>
           <Avatar
             size={"xl"}
-            src={
-              "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-            }
+            src={`${user.photos[0].value}`}
             css={{
               border: "2px solid white",
             }}
@@ -46,23 +65,23 @@ export default function Profile() {
         <Box p={6}>
           <Stack spacing={0} align={"center"} mb={5}>
             <Heading fontSize={"2xl"} fontWeight={500} fontFamily={"body"}>
-              John Doe
+              {user.displayName}
             </Heading>
-            <Text color={"gray.500"}>Frontend Developer</Text>
+            <Text color={"gray.500"}>{user.provider}</Text>
           </Stack>
 
           <Stack direction={"row"} justify={"center"} spacing={6}>
             <Stack spacing={0} align={"center"}>
-              <Text fontWeight={600}>23k</Text>
-              <Text fontSize={"sm"} color={"gray.500"}>
-                Followers
+              <Text fontSize={"md"} color={"gray.500"}>
+                User Id-
               </Text>
+              <Text fontWeight={600}>{user.id.substring(0, 10)}</Text>
             </Stack>
             <Stack spacing={0} align={"center"}>
-              <Text fontWeight={600}>23k</Text>
-              <Text fontSize={"sm"} color={"gray.500"}>
-                Followers
+              <Text fontSize={"md"} color={"gray.500"}>
+                Total Codes-
               </Text>
+              <Text fontWeight={600}>{totalCodes}</Text>
             </Stack>
           </Stack>
 
@@ -76,8 +95,10 @@ export default function Profile() {
               transform: "translateY(-2px)",
               boxShadow: "lg",
             }}
+            as={Link}
+            to="/dashboard"
           >
-            Follow
+            Dashboard
           </Button>
         </Box>
       </Box>

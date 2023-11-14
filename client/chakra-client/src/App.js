@@ -17,6 +17,8 @@ import Vanilla from "./Pages/languages/Vanilla";
 //
 import SignIn from "./components/Authentication/SignIn";
 import SignUp from "./components/Authentication/Signup";
+import Logout from "./components/Authentication/Logout";
+import Profile from "./components/Authentication/Profile";
 //
 import DesktopOnly from "./components/DesktopOnly";
 import ProtectedRoute from "./components/utils/ProtectedRoute";
@@ -37,6 +39,15 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                exact
+                element={
+                  <ProtectedRoute>
+                    <Profile />
                   </ProtectedRoute>
                 }
               />
@@ -87,6 +98,7 @@ function App() {
               />
               <Route path="/signup" exact element={<SignUp />} />
               <Route path="/signin" exact element={<SignIn />} />
+              <Route path="/logout" element={<Logout />} />
             </Routes>
           </Router>
         ) : (

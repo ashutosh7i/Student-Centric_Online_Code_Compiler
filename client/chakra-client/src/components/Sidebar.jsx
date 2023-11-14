@@ -43,6 +43,9 @@ import {
 } from "react-icons/fi";
 //
 import Logout from "./Authentication/Logout";
+//
+import { useRecoilValue } from "recoil";
+import { userState } from "../state";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, link: "/" },
@@ -92,6 +95,7 @@ const NavItem = ({ icon, children, link, ...rest }) => {
 };
 
 export default function Sidebar() {
+  const user = useRecoilValue(userState);
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -99,7 +103,7 @@ export default function Sidebar() {
   const [formData, setFormData] = useState({
     fileName: "",
     language: "",
-    user: "useridFromGoogle",
+    user: user.id,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -133,7 +137,7 @@ export default function Sidebar() {
             `File created: ${formData.fileName}.${formData.language}`
           );
           onClose();
-          let red = `/${formData.language}/user1/${formData.fileName}`;
+          let red = `/${formData.language}/${user.id}/${formData.fileName}.${formData.language}`;
           console.log(red);
           navigate(red);
         }, 1000);
