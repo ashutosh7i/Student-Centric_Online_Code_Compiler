@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 //
 import axios from "axios";
 //
+import { useRecoilValue } from "recoil";
+import { userState } from "../../state";
+//
+import Login from "./Login";
+//
 import {
   Box,
   Flex,
@@ -30,6 +35,8 @@ import {
   InputRightElement,
   useToast,
 } from "@chakra-ui/react";
+//
+import { FcGoogle } from "react-icons/fc";
 
 //for hero
 const avatars = [
@@ -75,7 +82,7 @@ const Blur = (props) => {
 };
 
 //step1 form for basic details
-const Form1 = ({ setUserType }) => {
+const Localauth_Form1 = ({ setUserType }) => {
   return (
     <>
       <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
@@ -136,7 +143,7 @@ const Form1 = ({ setUserType }) => {
 };
 
 //Conditional step 2 form for students.
-const Form2 = () => {
+const Localauth_Form2 = () => {
   return (
     <>
       <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
@@ -168,7 +175,7 @@ const Form2 = () => {
 };
 
 //Step 3 form  for username and Password.
-const Form3 = () => {
+const Localauth_Form3 = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   return (
@@ -206,7 +213,220 @@ const Form3 = () => {
 };
 
 //Handler for 3 step form
-function Multistep() {
+function LocalAuth() {
+  const toast = useToast();
+  const [step, setStep] = useState(1);
+  const [progress, setProgress] = useState(33.33);
+  const [userType, setUserType] = useState("");
+
+  return (
+    <>
+      {/* <Box
+        borderWidth="1px"
+        rounded="lg"
+        shadow="1px 1px 3px rgba(0,0,0,0.3)"
+        maxWidth={800}
+        p={6}
+        m="10px auto"
+        as="form"
+      >
+        <Progress
+          hasStripe
+          value={progress}
+          mb="5%"
+          mx="5%"
+          isAnimated
+        ></Progress>
+        {step === 1 ? (
+          <Localauth_Form1 setUserType={setUserType} />
+        ) : step === 2 ? (
+          <Localauth_Form2 />
+        ) : (
+          <Localauth_Form3 />
+        )}
+        <ButtonGroup mt="5%" w="100%">
+          <Flex w="100%" justifyContent="space-between">
+            <Flex>
+              <Button
+                onClick={() => {
+                  setStep(step - 1);
+                  setProgress(progress - 33.33);
+                }}
+                isDisabled={step === 1}
+                colorScheme="teal"
+                variant="solid"
+                w="7rem"
+                mr="5%"
+              >
+                Back
+              </Button>
+              <Button
+                w="7rem"
+                isDisabled={step === 3}
+                onClick={() => {
+                  if (userType === "Student" || step !== 1) {
+                    setStep(step + 1);
+                    setProgress(progress + 33.33);
+                  } else {
+                    // If user type is not "Student" and we're on step 1, skip to step 3
+                    setStep(3);
+                    setProgress(100);
+                    // Set academic details to "NA_NormalUser"
+                    // ... (depends on how you're storing these details)
+                  }
+                }}
+                colorScheme="teal"
+                variant="outline"
+              >
+                Next
+              </Button>
+            </Flex>
+            {step === 3 ? (
+              <Button
+                w="7rem"
+                colorScheme="red"
+                variant="solid"
+                onClick={() => {
+                  toast({
+                    title: "Account created.",
+                    description: "We've created your account for you.",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                }}
+              >
+                Submit
+              </Button>
+            ) : null}
+          </Flex>
+        </ButtonGroup>
+      </Box> */}
+      <form action="http://localhost:5000/auth/login/password" method="post">
+        <div>
+          <label for="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            autocomplete="username"
+            required
+          />
+        </div>
+        <div>
+          <label for="current-password">Password</label>
+          <input
+            id="current-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+        <div>
+          <button type="submit">Sign in</button>
+        </div>
+      </form>
+    </>
+  );
+}
+
+const Googleauth_Form1 = () => {
+  const user = useRecoilValue(userState);
+  console.log(user);
+  return (
+    <>
+      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
+        Google Auth SignUp
+      </Heading>
+
+      <Button
+        w="100%"
+        colorScheme="red"
+        variant="solid"
+        onClick={() => {
+          Login();
+          console.log(user);
+        }}
+      >
+        <Flex alignItems="center">
+          <Icon
+            as={FcGoogle}
+            w="20%"
+            h="5%"
+            mr="5%"
+            _hover={{ color: "white" }}
+          />
+          <Text>Sign Up with Google</Text>
+        </Flex>
+      </Button>
+
+      {/* <Flex>
+        <FormControl mr="5%">
+          <FormLabel htmlFor="first-name" fontWeight={"normal"}>
+            First name
+          </FormLabel>
+          <Input id="first-name" placeholder="First name" />
+        </FormControl>
+
+        <FormControl>
+          <FormLabel htmlFor="last-name" fontWeight={"normal"}>
+            Last name
+          </FormLabel>
+          <Input id="last-name" placeholder="First name" />
+        </FormControl>
+      </Flex>
+      <FormControl mt="2%">
+        <FormLabel htmlFor="email" fontWeight={"normal"}>
+          Email address
+        </FormLabel>
+        <Input id="email" type="email" placeholder="academic email preffered" />
+      </FormControl>
+       */}
+    </>
+  );
+};
+
+const Googleauth_Form2 = ({ setUserType }) => {
+  return (
+    <>
+      <Heading w="100%" textAlign={"center"} fontWeight="normal" mb="2%">
+        Academic Details
+      </Heading>
+
+      <FormControl as={GridItem} mt={"2%"} colSpan={[6, 3]}>
+        <FormLabel
+          htmlFor="country"
+          fontSize="sm"
+          fontWeight="md"
+          color="gray.700"
+          _dark={{
+            color: "gray.50",
+          }}
+        >
+          User Type
+        </FormLabel>
+        <Select
+          id="country"
+          name="country"
+          autoComplete="country"
+          placeholder="Select option"
+          focusBorderColor="brand.400"
+          shadow="sm"
+          size="sm"
+          w="full"
+          rounded="md"
+          onChange={(e) => setUserType(e.target.value)}
+        >
+          <option>Student</option>
+          <option>Normal User</option>
+        </Select>
+      </FormControl>
+    </>
+  );
+};
+
+function GoogleAuth() {
   const toast = useToast();
   const [step, setStep] = useState(1);
   const [progress, setProgress] = useState(33.33);
@@ -231,11 +451,11 @@ function Multistep() {
           isAnimated
         ></Progress>
         {step === 1 ? (
-          <Form1 setUserType={setUserType} />
+          <Googleauth_Form1 setUserType={setUserType} />
         ) : step === 2 ? (
-          <Form2 />
+          <Googleauth_Form2 />
         ) : (
-          <Form3 />
+          <Localauth_Form3 />
         )}
         <ButtonGroup mt="5%" w="100%">
           <Flex w="100%" justifyContent="space-between">
@@ -404,7 +624,7 @@ export default function SignUp() {
               </Text>
             </Heading>
           </Stack>
-          <Multistep />
+          <LocalAuth />
         </Stack>
       </Container>
       <Blur

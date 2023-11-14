@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //
 import { useParams } from "react-router-dom";
 //
@@ -10,6 +10,7 @@ import { java } from "@codemirror/lang-java";
 import SplitPane, { Pane } from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
 //
+
 import copyToClipboard from "../../utils/copyToClipboard.js";
 import downloadFile from "../../utils/downloadCodeFile.js";
 //
@@ -23,6 +24,7 @@ import {
   Button,
   Icon,
   Textarea,
+  useToast
 } from "@chakra-ui/react";
 //
 import { FaEdit, FaSave, FaPlay } from "react-icons/fa";
@@ -31,6 +33,12 @@ import { ColorModeSwitcher } from "../../components/utils/ColorModeSwitcher.jsx"
 import ShowSidebar from "../../components/QuickAccess/ShowSidebar.jsx";
 import ChangeFileName from "../../components/utils/ChangeFileName.jsx";
 import LoadingModal from "../../components/utils/LoadingModal.jsx";
+//
+import { useRecoilValue } from "recoil";
+import { userState } from "../../state.js";
+//
+import saveToDB from "../../utils/saveToDB.js";
+import readFromDB from "../../utils/readFromDB.js";
 
 var base64 = require("base-64");
 const layoutCSS = {
@@ -45,9 +53,41 @@ const layoutCSS = {
 // const filename = "hello.java";
 
 export default function Java() {
+  const toast = useToast();
+  useEffect(() => {
+    // On component mount, read old data and paste it in the textarea
+    // setCode(readFromDB(user.id));
+    readFromDB(user.id, filename)
+      .then((data) => {
+        toast({
+          title: "Progress Retried 📚",
+          description: "your code as it was last saved",
+          status: "info",
+          duration: 3000,
+          isClosable: true,
+        });
+        if (data !== undefined) {
+          setCode(data);
+        }
+      })
+      .catch((error) => {
+        toast({
+          title: "Welcome",
+          description:
+            "your code gets saved on every run, Continues where you left off",
+          status: "info",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+    // setCode(`${readFromDB(user.id)}`);
+  }, []);
+
+  const user = useRecoilValue(userState);
   const { userId, codeId } = useParams();
   let filename = codeId;
-  console.log(codeId);
+  //console.log(codeId);
+
   const [sizes, setSizes] = useState([200, 100, "auto"]);
   const [code, setCode] = useState(
     "// Type Java Code Below\n" +
@@ -100,6 +140,26 @@ export default function Java() {
 
   //running code
   async function runCode() {
+    //saving code to db
+    saveToDB(user.id, code, filename)
+      .then((message) => {
+        toast({
+          title: "✅Saved💾",
+          description: message,
+          status: "info",
+          duration: 1000,
+          isClosable: true,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Error",
+          description: error.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      });
     //if code is not running already
     if (isRunning) {
       alert("code already running");
@@ -232,7 +292,11 @@ export default function Java() {
         </Text>
         {/* //Change file name prompt */}
         {isChangeFileNameOpen && (
-          <ChangeFileName currentName={filename} onClose={closePrompt} />
+          <ChangeFileName
+            uid={user.id}
+            currentName={filename}
+            onClose={closePrompt}
+          />
         )}
         {/* Loading modal, will be used during compilation process. */}
         {isRunning && <LoadingModal />}
@@ -242,6 +306,13 @@ export default function Java() {
             colorScheme="blue"
             onClick={() => {
               downloadFile(code, filename);
+              toast({
+                title: "Download Starting",
+                description: filename + " is being downloaded",
+                status: "info",
+                duration: 3000,
+                isClosable: true,
+              });
             }}
           >
             {"Save  "}
@@ -314,6 +385,13 @@ export default function Java() {
                           copyToClipboard(
                             document.getElementById("ouutput").value
                           );
+                           toast({
+                             title: "Copied📋",
+                             description: "Output copied to clipboard",
+                             status: "success",
+                             duration: 2000,
+                             isClosable: true,
+                           });
                         }}
                       >
                         Copy 📋
@@ -326,6 +404,13 @@ export default function Java() {
                         id="textareaa"
                         onClick={() => {
                           setOutput("");
+                           toast({
+                             title: "Cleared🧹",
+                             description: "Output cleared",
+                             status: "warning",
+                             duration: 2000,
+                             isClosable: true,
+                           });
                         }}
                       >
                         Clear 🧹
