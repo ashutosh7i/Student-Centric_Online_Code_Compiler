@@ -11,7 +11,7 @@ export default async function getUserFiles(uid) {
 
     // Send a POST request to retrieve data from the server
     const response = await fetch(
-      "https://soc.centralindia.cloudapp.azure.com/codedb/getUserFiles",
+      "http://localhost:5000/codedb/getUserFiles",
       requestOptions
     );
 

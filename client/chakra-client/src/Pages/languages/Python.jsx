@@ -10,7 +10,6 @@ import { python } from "@codemirror/lang-python";
 import SplitPane, { Pane } from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
 //
-
 import copyToClipboard from "../../utils/copyToClipboard.js";
 import downloadFile from "../../utils/downloadCodeFile.js";
 //
@@ -39,7 +38,8 @@ import { userState } from "../../state.js";
 //
 import saveToDB from "../../utils/saveToDB.js";
 import readFromDB from "../../utils/readFromDB.js";
-
+//
+import { useNavigate } from "react-router-dom";
 var base64 = require("base-64");
 
 const layoutCSS = {
@@ -61,7 +61,7 @@ export default function Python() {
     readFromDB(user.id, filename)
       .then((data) => {
         toast({
-          title: "Progress Retried 📚",
+          title: "Progress Retrieved 📚",
           description: "your code as it was last saved",
           status: "info",
           duration: 3000,
@@ -84,6 +84,25 @@ export default function Python() {
     // setCode(`${readFromDB(user.id)}`);
   }, []);
 
+  const navigate = useNavigate();
+  // for keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      //ctrl+shift+enter run shortcut
+      if (e.ctrlKey && e.shiftKey && e.key === "Enter") {
+        runCode();
+      }
+      // //esc key to go to dashboard
+      // if (e.key === "Escape") {
+      //   e.preventDefault();
+      //   navigate("/dashboard");
+      // }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const user = useRecoilValue(userState);
   const { userId, codeId } = useParams();
   let filename = codeId;
@@ -100,6 +119,11 @@ export default function Python() {
   const [input, setInput] = useState("7"); //Store the input from user
   const [isRunning, setisRunning] = useState(false); //Store the state of running, used to prevent multi click on run
   const [isLoading, setIsLoading] = useState(false); //state for loading modal
+
+  //time and memory consumed
+  const [timeTaken, setTimeTaken] = useState(0);
+  const [memoryTaken, setMemoryTaken] = useState(0);
+  const [cpuTaken, setCpuTaken] = useState(0);
 
   //handlers for change file name prompt
   const [isChangeFileNameOpen, setIsChangeFileNameOpen] = useState(false);
@@ -191,6 +215,9 @@ export default function Python() {
               case "Accepted":
                 console.log("Accepted:", base64.decode(response2.data.stdout));
                 setOutput(base64.decode(response2.data.stdout));
+                setTimeTaken(response2.data.wall_time);
+                setMemoryTaken(response2.data.memory / 1000);
+                setCpuTaken(response2.data.time);
                 break;
               case "Wrong Answer":
                 console.log("Wrong Answer:", response2.data);
@@ -291,6 +318,11 @@ export default function Python() {
             uid={user.id}
             currentName={filename}
             onClose={closePrompt}
+            onFileNameChanged={() => {
+              setTimeTaken(0);
+              setMemoryTaken(0);
+              setCpuTaken(0);
+            }}
           />
         )}
         {/* Loading modal, will be used during compilation process. */}
@@ -359,7 +391,7 @@ export default function Python() {
               >
                 <VStack>
                   <Box w="80%" pt={7}>
-                    <Text>Output</Text>
+                    <Text as={"b"}>Output</Text>
                     <Box border={"1px"} h={200}>
                       <Textarea
                         fontFamily="monospace"
@@ -370,6 +402,34 @@ export default function Python() {
                         value={output}
                       />
                     </Box>
+                    <HStack
+                      mt={"2"}
+                      mb={"1"}
+                      rounded={"md"}
+                      p={1}
+                      border={"1px"}
+                      justifyContent="space-between"
+                      px={4} // Add horizontal padding
+                    >
+                      <VStack>
+                        <Text as={"b"}>Time:</Text>
+                        <Text mt={"-3"} as={"i"} color={"green"}>
+                          {timeTaken} sec
+                        </Text>
+                      </VStack>
+                      <VStack>
+                        <Text as={"b"}>Memory:</Text>
+                        <Text mt={"-3"} as={"i"} color={"green"}>
+                          {memoryTaken} mb
+                        </Text>
+                      </VStack>
+                      <VStack>
+                        <Text as={"b"}>Cpu:</Text>
+                        <Text mt={"-3"} as={"i"} color={"green"}>
+                          {cpuTaken} sec
+                        </Text>
+                      </VStack>
+                    </HStack>
                     <HStack pt={1}>
                       <Button
                         border={"1px"}
@@ -399,6 +459,9 @@ export default function Python() {
                         id="textareaa"
                         onClick={() => {
                           setOutput("");
+                          setTimeTaken(0);
+                          setMemoryTaken(0);
+                          setCpuTaken(0);
                           toast({
                             title: "Cleared🧹",
                             description: "Output cleared",
@@ -412,7 +475,7 @@ export default function Python() {
                       </Button>
                     </HStack>
                     <Box p={2}></Box>
-                    <Text>Custom Input</Text>
+                    <Text as={"b"}>Custom Input</Text>
                     <Box h={100}>
                       <Textarea
                         fontFamily="monospace"

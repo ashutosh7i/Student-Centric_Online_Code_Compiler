@@ -25,7 +25,7 @@ import { MdDelete } from "react-icons/md";
 //
 import deleteUserFile from "../../utils/deleteUserFile";
 
-export default function DeleteFile({ uid, actualFilename }) {
+export default function DeleteFile({ uid, actualFilename, onFileDeleted }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [filename, setFilename] = useState("");
   const toast = useToast();
@@ -41,6 +41,7 @@ export default function DeleteFile({ uid, actualFilename }) {
           duration: 3000,
           isClosable: true,
         });
+        onFileDeleted(); // Call the callback function
       } catch (error) {
         toast({
           title: "Error Deleting File",
@@ -101,6 +102,11 @@ export default function DeleteFile({ uid, actualFilename }) {
                 type="text"
                 value={filename}
                 onChange={(e) => setFilename(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    deleteFile();
+                  }
+                }}
               />
             </FormControl>
           </ModalBody>

@@ -4,7 +4,7 @@ export default function saveToDB(uid, data, filename) {
   console.log(newData);
 
   // Send the text to the server to save it to the database
-  return fetch("https://soc.centralindia.cloudapp.azure.com/codedb/saveToDB", {
+  return fetch("http://localhost:5000/codedb/saveToDB", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

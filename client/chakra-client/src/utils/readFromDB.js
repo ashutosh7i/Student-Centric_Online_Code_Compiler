@@ -12,7 +12,7 @@ export default async function readFromDB(uid, filename) {
 
     // Send a GET request to retrieve data from the server
     const response = await fetch(
-      "https://soc.centralindia.cloudapp.azure.com/codedb/readFromDB",
+      "http://localhost:5000/codedb/readFromDB",
       requestOptions
     );
 
@@ -28,7 +28,6 @@ export default async function readFromDB(uid, filename) {
 
     // Update the textarea with the retrieved data
     return `${data}`;
-  
   } catch (error) {
     // Handle any errors and show an alert
     throw new Error(error.message);

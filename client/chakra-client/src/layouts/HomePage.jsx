@@ -304,18 +304,15 @@ export default function HomePage() {
 
   useEffect(() => {
     const getUser = () => {
-      fetch(
-        "https://soc.centralindia.cloudapp.azure.com/auth/login/success",
-        {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": true,
-          },
-        }
-      )
+      fetch("http://localhost:5000/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
         .then((response) => {
           if (response.status === 200) return response.json();
           throw new Error("authentication has been failed!");
@@ -465,7 +462,7 @@ export default function HomePage() {
                 width={"100%"}
                 //w={800}
                 height={"100%"}
-                url="https://www.youtube.com/watch?v=xhSjVTXP8q8"
+                url="https://www.youtube.com/watch?v=70otZ8tULqY"
               />
             </Box>
           </Flex>

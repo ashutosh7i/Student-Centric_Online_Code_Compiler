@@ -31,16 +31,19 @@ app.use(
   })
 );
 
-// Serving frontend from the same server
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
+// // Serving frontend from the same server
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "index.html"));
+// });
 
 // Authentication route
 app.use("/auth", authRoute);
 
 // Code repo route
 app.use("/codedb", codeRoute);
+
+//on / serving the build app
+app.use(express.static(path.join(__dirname, "../client/chakra-client/build")));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

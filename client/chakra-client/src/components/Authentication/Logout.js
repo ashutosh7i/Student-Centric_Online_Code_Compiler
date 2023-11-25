@@ -1,6 +1,6 @@
 export default function Logout() {
   window.open(
-    "https://soc.centralindia.cloudapp.azure.com/auth/logout",
+    "http://localhost:5000/auth/logout",
     "_self"
   );
   console.log("Logout");

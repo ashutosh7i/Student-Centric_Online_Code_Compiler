@@ -16,7 +16,7 @@ export default function updateFilename(uid, filename, newFilename) {
 
       // Send a POST request to update the filename on the server
       const response = await fetch(
-        "https://soc.centralindia.cloudapp.azure.com/codedb/updateFilename",
+        "http://localhost:5000/codedb/updateFilename",
         requestOptions
       );
 

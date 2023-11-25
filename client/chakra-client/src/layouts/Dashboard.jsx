@@ -80,7 +80,7 @@ const iconMapping = {
   html: Html5Original,
 };
 
-function CodeFile({ user, fileName, lastOpened }) {
+function CodeFile({ user, fileName, lastOpened, onFileDeleted }) {
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -122,7 +122,11 @@ function CodeFile({ user, fileName, lastOpened }) {
         <Button colorScheme="green" variant="solid" onClick={handleEditClick}>
           <Icon as={FiEdit2} boxSize={5} />
         </Button>
-        <DeleteFile uid={user} actualFilename={fileName} />
+        <DeleteFile
+          uid={user}
+          actualFilename={fileName}
+          onFileDeleted={onFileDeleted}
+        />
       </HStack>
     </HStack>
   );
@@ -173,20 +177,28 @@ export default function Dashboard() {
 
             <CardBody>
               <Stack divider={<StackDivider />} spacing="4">
-                {userFiles.map((file) =>
-                  file.filename === "New User" ? (
-                    <Center>
-                      <Text>Welcome, new user</Text>
-                    </Center>
-                  ) : (
-                    <CodeFile
-                      user={user.id}
-                      key={file.filename}
-                      fileName={file.filename}
-                      lastOpened={moment(file.timestamp).fromNow()}
-                    />
-                  )
-                )}
+                {/* //sorting files by timestamp */}
+                {userFiles
+                  .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                  .map((file) =>
+                    file.filename === "New User" ? (
+                      <Center>
+                        <Text>Welcome, new user</Text>
+                      </Center>
+                    ) : (
+                      <CodeFile
+                        user={user.id}
+                        key={file.filename}
+                        fileName={file.filename}
+                        lastOpened={moment(file.timestamp).fromNow()}
+                        onFileDeleted={() =>
+                          setUserFiles((oldFiles) =>
+                            oldFiles.filter((f) => f.filename !== file.filename)
+                          )
+                        }
+                      />
+                    )
+                  )}
               </Stack>
             </CardBody>
           </Card>

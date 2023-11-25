@@ -225,6 +225,7 @@ export default function Sidebar() {
                           placeholder="ashutosh.7i"
                           type="text"
                           onChange={handleFileNameChange}
+                          autoFocus //brings keyboard focus when opened
                         />
                       </FormControl>
                     </VStack>
