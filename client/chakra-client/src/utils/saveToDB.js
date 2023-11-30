@@ -4,7 +4,7 @@ export default function saveToDB(uid, data, filename) {
   console.log(newData);
 
   // Send the text to the server to save it to the database
-  return fetch("http://localhost:5000/codedb/saveToDB", {
+  return fetch(`${process.env.REACT_APP_CODEDB}/saveToDB`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

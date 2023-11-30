@@ -2,54 +2,6 @@ const router = require("express").Router();
 const moment = require("moment");
 const pool = require("../dbPool");
 
-// Saving data to MySQL
-router.post("/savetoDB", async (req, res) => {
-  // Getting a connection from the pool
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.error("DB Connection Error: " + err);
-      res.sendStatus(500);
-      return;
-    }
-
-    // Transaction
-    try {
-      const data = req.body.data;
-      const uid = req.body.uid;
-      const filename = req.body.filename;
-      const timestamp = moment().format("HH:mm:ss YYYY-MM-DD");
-      console.log(uid, data, timestamp, filename);
-
-      // SQL insert query to insert new data or update existing data
-      const insertQuery =
-        "INSERT INTO saveretrievemodule (id, data, timestamp, filename) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE data = VALUES(data), timestamp = VALUES(timestamp)";
-
-      connection.query(
-        // Execute query
-        insertQuery,
-        // Provide params
-        [uid, JSON.stringify({ data: data }), timestamp, filename],
-        // Handle the result
-        (error, results) => {
-          if (error) {
-            console.error("DB Error saving or updating data: " + error.message);
-            res.sendStatus(503);
-          } else {
-            res.sendStatus(200);
-            console.log("Data saved successfully or updated");
-          }
-          connection.release(); // Release the connection back to the pool
-        }
-      );
-    } catch (error) {
-      // Error handling
-      console.error("Internal Server Error", error);
-      res.sendStatus(500);
-      connection.release(); // Release the connection in case of an error
-    }
-  });
-});
-
 // Retrieving filenames from database
 router.post("/getUserFiles", async (req, res) => {
   const uid = req.body.uid;
@@ -57,7 +9,7 @@ router.post("/getUserFiles", async (req, res) => {
 
   // Define the SQL SELECT query to retrieve the filenames and timestamps by uid
   const selectQuery =
-    "SELECT filename, timestamp FROM saveretrievemodule WHERE id = ? ORDER BY timestamp DESC";
+    "SELECT filename, timestamp FROM coderepo WHERE id = ? ORDER BY timestamp DESC";
 
   pool.getConnection((err, connection) => {
     if (err) {
@@ -97,8 +49,7 @@ router.post("/deleteUserFile", async (req, res) => {
   console.log("deleteUserFile called");
 
   // Define the SQL DELETE query to delete the file by uid and filename
-  const deleteQuery =
-    "DELETE FROM saveretrievemodule WHERE id = ? AND filename = ?";
+  const deleteQuery = "DELETE FROM coderepo WHERE id = ? AND filename = ?";
 
   pool.getConnection((err, connection) => {
     if (err) {
@@ -147,7 +98,7 @@ router.post("/updateFilename", async (req, res) => {
 
       // SQL update query to update filename
       const updateQuery =
-        "UPDATE saveretrievemodule SET filename = ? WHERE id = ? AND filename = ?";
+        "UPDATE coderepo SET filename = ? WHERE id = ? AND filename = ?";
 
       connection.query(
         // Execute query
@@ -175,7 +126,75 @@ router.post("/updateFilename", async (req, res) => {
   });
 });
 
-// Retrieving data from database
+// Saving code to database with UID
+router.post("/savetoDB", async (req, res) => {
+  // Getting a connection from the pool
+  pool.getConnection((err, connection) => {
+    if (err) {
+      console.error("DB Connection Error: " + err);
+      res.sendStatus(500);
+      return;
+    }
+
+    // Create table if not exists
+    const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS coderepo (
+    \`id\` varchar(255) NOT NULL,
+    \`data\` json DEFAULT NULL,
+    \`timestamp\` varchar(45) DEFAULT NULL,
+    \`filename\` varchar(45) NOT NULL,
+    PRIMARY KEY (\`id\`,\`filename\`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+    `;
+
+    connection.query(createTableQuery, (error, results) => {
+      if (error) {
+        console.error("DB Error creating table: " + error.message);
+        res.sendStatus(503);
+        connection.release();
+        return;
+      }
+    });
+
+    // Transaction
+    try {
+      const data = req.body.data;
+      const uid = req.body.uid;
+      const filename = req.body.filename;
+      const timestamp = moment().format("HH:mm:ss YYYY-MM-DD");
+      console.log(uid, data, timestamp, filename);
+
+      // SQL insert query to insert new data or update existing data
+      const insertQuery =
+        "INSERT INTO coderepo (id, data, timestamp, filename) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE data = VALUES(data), timestamp = VALUES(timestamp)";
+
+      connection.query(
+        // Execute query
+        insertQuery,
+        // Provide params
+        [uid, JSON.stringify({ data: data }), timestamp, filename],
+        // Handle the result
+        (error, results) => {
+          if (error) {
+            console.error("DB Error saving or updating data: " + error.message);
+            res.sendStatus(503);
+          } else {
+            res.sendStatus(200);
+            console.log("Data saved successfully or updated");
+          }
+          connection.release(); // Release the connection back to the pool
+        }
+      );
+    } catch (error) {
+      // Error handling
+      console.error("Internal Server Error", error);
+      res.sendStatus(500);
+      connection.release(); // Release the connection in case of an error
+    }
+  });
+});
+
+// Retrieving code from database
 router.post("/readfromDB", async (req, res) => {
   const uid = req.body.uid;
   const filename = req.body.filename;
@@ -183,7 +202,7 @@ router.post("/readfromDB", async (req, res) => {
 
   // Define the SQL SELECT query to retrieve the latest document by uid
   const selectQuery =
-    "SELECT id, data, timestamp, filename FROM saveretrievemodule WHERE id = ? AND filename = ? ORDER BY timestamp DESC LIMIT 1";
+    "SELECT id, data, timestamp, filename FROM coderepo WHERE id = ? AND filename = ? ORDER BY timestamp DESC LIMIT 1";
 
   pool.getConnection((err, connection) => {
     if (err) {

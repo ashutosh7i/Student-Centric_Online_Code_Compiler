@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 
-const CLIENT_URL = "http://localhost:5000/";
+const CLIENT_URL = process.env.CLIENT_URL;
 
 //login route
 router.post("/login/password", (req, res, next) => {

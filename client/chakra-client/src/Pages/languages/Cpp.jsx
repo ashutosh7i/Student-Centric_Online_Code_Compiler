@@ -155,12 +155,12 @@ export default function Cpp() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "https://soc.centralindia.cloudapp.azure.com/api/",
-    crossDomain: true,
+    baseURL: process.env.REACT_APP_COMPILATION_URL,
+    // crossDomain: true,
     params: {
       base64_encoded: "true",
       fields: "*",
-      crossDomain: true,
+      // crossDomain: true,
     },
     headers: {
       "content-type": "application/json",
@@ -202,7 +202,7 @@ export default function Cpp() {
 
       //submitting the code to api
       try {
-        const response1 = await api.post("/submissions", {
+        const response1 = await api.post("/newjob", {
           language_id: 52,
           source_code: base64.encode(code),
           stdin: base64.encode(input),
@@ -216,9 +216,7 @@ export default function Cpp() {
           //polling the server untill compilation is completed or failed.
           let status = "Processing";
           while (status === "Processing" || status === "In Queue") {
-            const response2 = await api.get(
-              `/submissions/${response1.data.token}`
-            );
+            const response2 = await api.get(`/jobs/${response1.data.token}`);
             status = response2.data.status.description;
 
             //diffrent outputs based on compilation

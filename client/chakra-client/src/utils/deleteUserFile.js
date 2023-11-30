@@ -11,7 +11,7 @@ export default async function deleteUserFile(uid, filename) {
 
     // Send a POST request to delete the file from the server
     const response = await fetch(
-      "http://localhost:5000/codedb/deleteUserFile",
+      `${process.env.REACT_APP_CODEDB}/deleteUserFile`,
       requestOptions
     );
 

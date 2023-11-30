@@ -11,7 +11,7 @@ export default async function getUserFiles(uid) {
 
     // Send a POST request to retrieve data from the server
     const response = await fetch(
-      "http://localhost:5000/codedb/getUserFiles",
+      `${process.env.REACT_APP_CODEDB}/getUserFiles`,
       requestOptions
     );
 

@@ -152,7 +152,7 @@ export default function Java() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "https://soc.centralindia.cloudapp.azure.com/api",
+    baseURL: process.env.REACT_APP_COMPILATION_URL,
     params: {
       base64_encoded: "true",
       fields: "*",
@@ -197,7 +197,7 @@ export default function Java() {
 
       //submitting the code to api
       try {
-        const response1 = await api.post("/submissions", {
+        const response1 = await api.post("/newjob", {
           language_id: 62,
           source_code: base64.encode(code),
           stdin: base64.encode(input),
@@ -212,7 +212,7 @@ export default function Java() {
           let status = "Processing";
           while (status === "Processing" || status === "In Queue") {
             const response2 = await api.get(
-              `/submissions/${response1.data.token}`
+              `/jobs/${response1.data.token}`
             );
             status = response2.data.status.description;
 

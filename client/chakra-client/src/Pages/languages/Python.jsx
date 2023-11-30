@@ -146,7 +146,7 @@ export default function Python() {
 
   //setting up a axios instance
   const api = axios.create({
-    baseURL: "https://soc.centralindia.cloudapp.azure.com/api",
+    baseURL: process.env.REACT_APP_COMPILATION_URL,
     params: {
       base64_encoded: "true",
       fields: "*",
@@ -191,7 +191,7 @@ export default function Python() {
 
       //submitting the code to api
       try {
-        const response1 = await api.post("/submissions", {
+        const response1 = await api.post("/newjob", {
           language_id: 70,
           source_code: base64.encode(code),
           stdin: base64.encode(input),
@@ -205,9 +205,7 @@ export default function Python() {
           //polling the server untill compilation is completed or failed.
           let status = "Processing";
           while (status === "Processing" || status === "In Queue") {
-            const response2 = await api.get(
-              `/submissions/${response1.data.token}`
-            );
+            const response2 = await api.get(`/jobs/${response1.data.token}`);
             status = response2.data.status.description;
 
             //diffrent outputs based on compilation

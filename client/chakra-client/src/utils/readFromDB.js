@@ -12,7 +12,7 @@ export default async function readFromDB(uid, filename) {
 
     // Send a GET request to retrieve data from the server
     const response = await fetch(
-      "http://localhost:5000/codedb/readFromDB",
+      `${process.env.REACT_APP_CODEDB}/readFromDB`,
       requestOptions
     );
 

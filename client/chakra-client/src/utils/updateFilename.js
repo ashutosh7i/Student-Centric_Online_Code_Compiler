@@ -16,7 +16,7 @@ export default function updateFilename(uid, filename, newFilename) {
 
       // Send a POST request to update the filename on the server
       const response = await fetch(
-        "http://localhost:5000/codedb/updateFilename",
+        `${process.env.REACT_APP_CODEDB}/updateFilename`,
         requestOptions
       );
 

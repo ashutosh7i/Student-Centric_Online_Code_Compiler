@@ -1,6 +1,2 @@
 node_modules
-dbconf
-final.js
-server2.js
-dbPool.js
-passport.js
+.env
