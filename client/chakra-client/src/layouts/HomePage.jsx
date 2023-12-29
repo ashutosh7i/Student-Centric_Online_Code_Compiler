@@ -304,7 +304,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const getUser = () => {
-      fetch("http://socbackend.centralindia.cloudapp.azure.com/auth/login/success", {
+      fetch("https://socbackend.centralindia.cloudapp.azure.com/auth/login/success", {
         method: "GET",
         credentials: "include",
         headers: {
