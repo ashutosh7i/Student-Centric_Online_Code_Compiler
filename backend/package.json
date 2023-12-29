@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "express-session": "^1.17.3",
     "moment": "^2.29.4",
     "mysql": "^2.18.1",
+    "mysql2": "^3.6.5",
     "nodemon": "^2.0.20",
     "passport": "^0.5.3",
     "passport-facebook": "^3.0.0",

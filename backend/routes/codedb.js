@@ -136,26 +136,6 @@ router.post("/savetoDB", async (req, res) => {
       return;
     }
 
-    // Create table if not exists
-    const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS coderepo (
-    \`id\` varchar(255) NOT NULL,
-    \`data\` json DEFAULT NULL,
-    \`timestamp\` varchar(45) DEFAULT NULL,
-    \`filename\` varchar(45) NOT NULL,
-    PRIMARY KEY (\`id\`,\`filename\`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
-    `;
-
-    connection.query(createTableQuery, (error, results) => {
-      if (error) {
-        console.error("DB Error creating table: " + error.message);
-        res.sendStatus(503);
-        connection.release();
-        return;
-      }
-    });
-
     // Transaction
     try {
       const data = req.body.data;
