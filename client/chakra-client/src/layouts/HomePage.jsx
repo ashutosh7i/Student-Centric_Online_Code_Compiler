@@ -5,6 +5,8 @@ import { useRecoilState } from "recoil";
 import { userState } from "../state";
 import { Link, useNavigate } from "react-router-dom";
 //
+import { useAuth0 } from "@auth0/auth0-react";
+//
 import {
   Avatar,
   Box,
@@ -298,34 +300,41 @@ const Footer = () => {
 };
 
 export default function HomePage() {
-  const [user, setUser] = useRecoilState(userState);
+  const [, setUser] = useRecoilState(userState);
   const colorMode = useColorMode();
   const navigate = useNavigate();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-  useEffect(() => {
-    const getUser = () => {
-      fetch("https://socbackend.centralindia.cloudapp.azure.com/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          //"Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then((resObject) => {
-          setUser(resObject.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
-  }, []);
+  // console.log("userO", user);
+  console.log("isAuthenticated", isAuthenticated);
+  console.log("user", user);
+  setUser(user);
+
+
+  // useEffect(() => {
+  //   const getUser = () => {
+  //     fetch("https://socbackend.centralindia.cloudapp.azure.com/auth/login/success", {
+  //       method: "GET",
+  //       credentials: "include",
+  //       headers: {
+  //         "Accept": "application/json",
+  //         "Content-Type": "application/json",
+  //         //"Access-Control-Allow-Credentials": true,
+  //       },
+  //     })
+  //       .then((response) => {
+  //         if (response.status === 200) return response.json();
+  //         throw new Error("authentication has been failed!");
+  //       })
+  //       .then((resObject) => {
+  //         setUser(resObject.user);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   };
+  //   getUser();
+  // }, []);
 
   // const heightt = window.innerHeight - 900;
   return (

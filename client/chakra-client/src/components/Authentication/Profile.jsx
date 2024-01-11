@@ -24,14 +24,14 @@ export default function Profile() {
 
   const [totalCodes, setTotalCodes] = useState(0);
   useEffect(() => {
-    getUserFiles(user.id)
+    getUserFiles(user.nickname)
       .then((files) => {
         setTotalCodes(files.length);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [user.id]);
+  }, [user.nickname]);
 
   return (
     <Center py={6}>
@@ -55,7 +55,7 @@ export default function Profile() {
         <Flex justify={"center"} mt={-12}>
           <Avatar
             size={"xl"}
-            src={`${user.photos[0].value}`}
+            src={`${user.picture}`}
             css={{
               border: "2px solid white",
             }}
@@ -65,9 +65,9 @@ export default function Profile() {
         <Box p={6}>
           <Stack spacing={0} align={"center"} mb={5}>
             <Heading fontSize={"2xl"} fontWeight={500} fontFamily={"body"}>
-              {user.displayName}
+              {user.name}
             </Heading>
-            <Text color={"gray.500"}>{user.provider}</Text>
+            <Text color={"gray.500"}>{user.email}</Text>
           </Stack>
 
           <Stack direction={"row"} justify={"center"} spacing={6}>
@@ -75,7 +75,7 @@ export default function Profile() {
               <Text fontSize={"md"} color={"gray.500"}>
                 User Id-
               </Text>
-              <Text fontWeight={600}>{user.id.substring(0, 10)}</Text>
+              <Text fontWeight={600}>{user.nickname}</Text>
             </Stack>
             <Stack spacing={0} align={"center"}>
               <Text fontSize={"md"} color={"gray.500"}>

@@ -57,8 +57,8 @@ export default function Python() {
   const toast = useToast();
   useEffect(() => {
     // On component mount, read old data and paste it in the textarea
-    // setCode(readFromDB(user.id));
-    readFromDB(user.id, filename)
+    // setCode(readFromDB(user.nickname));
+    readFromDB(user.nickname, filename)
       .then((data) => {
         toast({
           title: "Progress Retrieved 📚",
@@ -81,7 +81,7 @@ export default function Python() {
           isClosable: true,
         });
       });
-    // setCode(`${readFromDB(user.id)}`);
+    // setCode(`${readFromDB(user.nickname)}`);
   }, []);
 
   const navigate = useNavigate();
@@ -160,7 +160,7 @@ export default function Python() {
   //running code
   async function runCode() {
     //saving code to db
-    saveToDB(user.id, code, filename)
+    saveToDB(user.nickname, code, filename)
       .then((message) => {
         toast({
           title: "✅Saved💾",
@@ -313,7 +313,7 @@ export default function Python() {
         {/* //Change file name prompt */}
         {isChangeFileNameOpen && (
           <ChangeFileName
-            uid={user.id}
+            uid={user.nickname}
             currentName={filename}
             onClose={closePrompt}
             onFileNameChanged={() => {

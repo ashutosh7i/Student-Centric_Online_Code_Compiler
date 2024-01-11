@@ -22,6 +22,9 @@ import Profile from "./components/Authentication/Profile";
 //
 import DesktopOnly from "./components/DesktopOnly";
 import ProtectedRoute from "./components/utils/ProtectedRoute";
+//
+import LoginButton from "./components/Authentication/LoginButton";
+import LogoutButton from "./components/Authentication/LogoutButton";
 
 function App() {
   const [isLargerThanMD] = useMediaQuery("(min-width: 48em)");
@@ -98,7 +101,7 @@ function App() {
               />
               <Route path="/signup" exact element={<SignUp />} />
               <Route path="/signin" exact element={<SignIn />} />
-              <Route path="/logout" element={<Logout />} />
+              <Route path="/logout" element={<LogoutButton />} />
             </Routes>
           </Router>
         ) : (

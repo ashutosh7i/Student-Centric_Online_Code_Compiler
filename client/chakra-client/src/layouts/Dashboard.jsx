@@ -139,12 +139,14 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchUserFiles = async () => {
-      const files = await getUserFiles(user.id);
+      const files = await getUserFiles(user.nickname);
       setUserFiles(files);
+      console.log(user.nickname)
+      console.log(files)
     };
 
     fetchUserFiles();
-  }, [user.id]);
+  }, [user.nickname]);
 
   useEffect(() => {
     const newUser = userFiles.some((file) => file.filename === "New User");
@@ -187,7 +189,7 @@ export default function Dashboard() {
                       </Center>
                     ) : (
                       <CodeFile
-                        user={user.id}
+                        user={user.nickname}
                         key={file.filename}
                         fileName={file.filename}
                         lastOpened={moment(file.timestamp).fromNow()}

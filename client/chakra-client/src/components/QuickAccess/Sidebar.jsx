@@ -13,6 +13,7 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import LogoutButton from "../Authentication/LogoutButton";
 
 //sample user data that will come from backend
 let name = "Aashtosh Soni";
@@ -53,13 +54,10 @@ function SidebarContent({ onClick }) {
         </Button>
       </HStack>
       <Button
-        onClick={() => {
-          navigate("/logout");
-        }}
         style={{ backgroundColor: "red" }}
         w="100%"
       >
-        Logout
+<LogoutButton/>
       </Button>
     </VStack>
   );

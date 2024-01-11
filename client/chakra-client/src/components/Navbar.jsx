@@ -28,6 +28,8 @@ import socLogo from "../assets/images/soc_logo.png";
 //
 import Login from "./Authentication/Login";
 import Logout from "./Authentication/Logout";
+import LoginButton from "./Authentication/LoginButton";
+import LogoutButton from "./Authentication/LogoutButton";
 
 const NavLink = (props) => {
   const { children } = props;
@@ -83,16 +85,16 @@ export default function Navbar() {
                     cursor={"pointer"}
                     minW={0}
                   >
-                    <Avatar size={"sm"} src={`${user.photos[0].value}`} />
+                    <Avatar size={"sm"} src={`${user.picture}`} />
                   </MenuButton>
                   <MenuList alignItems={"center"}>
                     <br />
                     <Center>
-                      <Avatar size={"lg"} src={`${user.photos[0].value}`} />
+                      <Avatar size={"lg"} src={`${user.picture}`} />
                     </Center>
                     <br />
                     <Center>
-                      <p>{user.displayName}</p>
+                      <p>{user.name}</p>
                     </Center>
                     <br />
                     <MenuDivider />
@@ -102,23 +104,20 @@ export default function Navbar() {
                     <MenuItem as={Link} to={"/dashboard"}>
                       Dashboard
                     </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        Logout();
-                      }}
-                    >
-                      Logout
+                    <MenuItem>
+                      <LogoutButton/>
                     </MenuItem>
                   </MenuList>
                 </Menu>
               ) : (
-                <Button
-                  onClick={() => {
-                    Login();
-                  }}
-                >
-                  Login
-                </Button>
+                // <Button
+                //   onClick={() => {
+                //     Login();
+                //   }}
+                // >
+                //   Login
+                // </Button>
+                <LoginButton/>
               )}
             </Stack>
           </Flex>

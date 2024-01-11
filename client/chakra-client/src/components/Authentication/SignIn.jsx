@@ -17,6 +17,7 @@ import {
 //
 import ForgotPasswordForm from "./ForgotPassword";
 import Login from "./Login";
+import LoginButton from "./Login";
 
 export default function SignIn() {
   const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -59,9 +60,10 @@ export default function SignIn() {
                 Sign in
               </Button>
               <Divider />
-              <Button colorScheme="pink" variant="solid" onClick={Login}>
+              {/* <Button colorScheme="pink" variant="solid" onClick={Login}>
                 Google
-              </Button>
+              </Button> */}
+              <LoginButton/>
             </Stack>
           </Stack>
         </Flex>

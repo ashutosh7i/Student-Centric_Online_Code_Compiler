@@ -103,7 +103,7 @@ export default function Sidebar() {
   const [formData, setFormData] = useState({
     fileName: "",
     language: "",
-    user: user.id,
+    user: user.nickname,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -137,7 +137,7 @@ export default function Sidebar() {
             `File created: ${formData.fileName}.${formData.language}`
           );
           onClose();
-          let red = `/${formData.language}/${user.id}/${formData.fileName}.${formData.language}`;
+          let red = `/${formData.language}/${user.nickname}/${formData.fileName}.${formData.language}`;
           console.log(red);
           navigate(red);
         }, 1000);
