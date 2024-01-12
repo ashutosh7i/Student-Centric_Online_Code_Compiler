@@ -37,6 +37,9 @@ jobs:
           REACT_APP_COMPILATION_URL: ${{ secrets.REACT_APP_COMPILATION_URL}}
           REACT_APP_GOOGLE_AUTH: ${{ secrets.REACT_APP_GOOGLE_AUTH}}
           REACT_APP_CODEDB: ${{ secrets.REACT_APP_CODEDB}}
+          REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN}}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.REACT_APP_AUTH0_CLIENT_ID}}
+          REACT_APP_CLIENT_URL: ${{ secrets.REACT_APP_CLIENT_URL}}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
