@@ -55,6 +55,7 @@ import Navbar from "../components/Navbar";
 import Dashboard from "../layouts/Dashboard";
 import socLogo from "../assets/images/soc_logo.png";
 import Signin from "../components/Authentication/SignIn";
+import LoginButton from "../components/Authentication/LoginButton";
 
 //Navbar Component
 const Nav = () => {
@@ -420,7 +421,7 @@ export default function HomePage() {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: "column", sm: "row" }}
             >
-              <Link to={"/dashboard"}>
+              {/* <Link to={"/dashboard"}> */}
                 <Button
                   rounded={"full"}
                   size={"lg"}
@@ -430,9 +431,10 @@ export default function HomePage() {
                   bg={"red.400"}
                   _hover={{ bg: "red.500" }}
                 >
-                  Get started 🚀
+                  {/* Get started 🚀 */}
+                  <LoginButton/>
                 </Button>
-              </Link>
+              {/* </Link> */}
               <Button
                 rounded={"full"}
                 size={"lg"}
