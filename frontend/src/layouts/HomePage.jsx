@@ -1,33 +1,20 @@
-import { ReactElement } from "react";
-import { useEffect, useState } from "react";
 //
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../state";
-import { Link, useNavigate } from "react-router-dom";
 //
 import { useAuth0 } from "@auth0/auth0-react";
 //
 import {
-  Avatar,
   Box,
   Button,
   Center,
-  CloseButton,
   Container,
-  createIcon,
   Flex,
   Heading,
-  HStack,
   Icon,
-  IconButton,
-  IconProps,
   Image,
   ListItem,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   SimpleGrid,
   Stack,
   StackDivider,
@@ -35,9 +22,8 @@ import {
   UnorderedList,
   useColorMode,
   useColorModeValue,
-  useDisclosure,
   VisuallyHidden,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 //
 import ReactPlayer from "react-player/youtube";
@@ -51,11 +37,9 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 //
-import Navbar from "../components/Navbar";
-import Dashboard from "../layouts/Dashboard";
 import socLogo from "../assets/images/soc_logo.png";
-import Signin from "../components/Authentication/SignIn";
 import LoginButton from "../components/Authentication/LoginButton";
+import Navbar from "../components/Navbar";
 
 //Navbar Component
 const Nav = () => {
@@ -311,7 +295,6 @@ export default function HomePage() {
   console.log("user", user);
   setUser(user);
 
-
   // useEffect(() => {
   //   const getUser = () => {
   //     fetch("https://socbackend.centralindia.cloudapp.azure.com/auth/login/success", {
@@ -421,20 +404,23 @@ export default function HomePage() {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: "column", sm: "row" }}
             >
-              {/* <Link to={"/dashboard"}> */}
-                <Button
-                  rounded={"full"}
-                  size={"lg"}
-                  fontWeight={"normal"}
-                  px={6}
-                  colorScheme={"red"}
-                  bg={"red.400"}
-                  _hover={{ bg: "red.500" }}
-                >
-                  {/* Get started 🚀 */}
-                  <LoginButton/>
-                </Button>
-              {/* </Link> */}
+              {isAuthenticated ? (
+                <Link to={"/dashboard"}>
+                  <Button
+                    rounded={"full"}
+                    size={"lg"}
+                    fontWeight={"normal"}
+                    px={6}
+                    colorScheme={"red"}
+                    bg={"red.400"}
+                    _hover={{ bg: "red.500" }}
+                  >
+                    Get started 🚀
+                  </Button>
+                </Link>
+              ) : (
+                <LoginButton />
+              )}
               <Button
                 rounded={"full"}
                 size={"lg"}

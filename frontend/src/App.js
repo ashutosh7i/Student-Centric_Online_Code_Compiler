@@ -25,6 +25,8 @@ import ProtectedRoute from "./components/utils/ProtectedRoute";
 //
 import LoginButton from "./components/Authentication/LoginButton";
 import LogoutButton from "./components/Authentication/LogoutButton";
+//
+import NotFound from "./Pages/NotFound";
 
 function App() {
   const [isLargerThanMD] = useMediaQuery("(min-width: 48em)");
@@ -102,6 +104,7 @@ function App() {
               <Route path="/signup" exact element={<SignUp />} />
               <Route path="/signin" exact element={<SignIn />} />
               <Route path="/logout" element={<LogoutButton />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
         ) : (

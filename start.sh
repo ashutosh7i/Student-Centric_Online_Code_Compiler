@@ -1,17 +1,20 @@
 #!/bin/bash
 
-# Starting compiler container
 cd backend
-cd judge0-v1.13.0
+
+# Starting compiler container
+cd soc_docker_service
 docker-compose up -d db redis
 sleep 5
 docker-compose up -d 
 sleep 5
 
-# Starting mysql container
+# # Starting mysql container
 cd ..
-docker-compose up -d 
-sleep 5
+# docker-compose up -d 
+# sleep 5
+# docker-compose up -d 
+# sleep 5
 
 # Starting nodejs server
 npm start 

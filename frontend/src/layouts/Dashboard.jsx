@@ -2,42 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //
 import {
-  Avatar,
   Box,
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Center,
-  CloseButton,
   Container,
-  Drawer,
-  DrawerContent,
-  Flex,
-  FormControl,
-  Grid,
   Heading,
   HStack,
   Icon,
-  IconButton,
-  Input,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  SimpleGrid,
   Stack,
   StackDivider,
-  Stat,
-  StatLabel,
-  StatNumber,
   Text,
   useColorModeValue,
-  useDisclosure,
   useMediaQuery,
-  VStack,
   useToast,
 } from "@chakra-ui/react";
 //
@@ -50,14 +29,7 @@ import {
 } from "devicons-react";
 //
 import {
-  FiBell,
-  FiChevronDown,
-  FiDelete,
-  FiEdit,
   FiEdit2,
-  FiEdit3,
-  FiMenu,
-  FiPenTool,
 } from "react-icons/fi";
 //
 import Navbar from "../components/Navbar.jsx";

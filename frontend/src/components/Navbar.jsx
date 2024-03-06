@@ -3,33 +3,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../state";
 //
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
-  Box,
-  Flex,
   Avatar,
-  Text,
+  Box,
   Button,
+  Center,
+  Container,
+  Flex,
+  Image,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
   MenuDivider,
-  useDisclosure,
-  useColorModeValue,
+  MenuItem,
+  MenuList,
   Stack,
-  Container,
-  Image,
   useColorMode,
-  Center,
+  useColorModeValue,
+  useDisclosure
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 //
 import socLogo from "../assets/images/soc_logo.png";
 //
-import Login from "./Authentication/Login";
-import Logout from "./Authentication/Logout";
+import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./Authentication/LoginButton";
-import LogoutButton from "./Authentication/LogoutButton";
 
 const NavLink = (props) => {
   const { children } = props;
@@ -57,7 +54,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { logout } = useAuth0();
   return (
     <>
       <Container
@@ -104,8 +101,13 @@ export default function Navbar() {
                     <MenuItem as={Link} to={"/dashboard"}>
                       Dashboard
                     </MenuItem>
-                    <MenuItem>
-                      <LogoutButton/>
+                    <MenuItem
+                      onClick={(e) => {
+                        e.preventDefault();
+                        logout();
+                      }}
+                    >
+                      Logout
                     </MenuItem>
                   </MenuList>
                 </Menu>
@@ -117,7 +119,7 @@ export default function Navbar() {
                 // >
                 //   Login
                 // </Button>
-                <LoginButton/>
+                <LoginButton />
               )}
             </Stack>
           </Flex>

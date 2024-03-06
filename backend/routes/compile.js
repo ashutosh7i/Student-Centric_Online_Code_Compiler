@@ -80,4 +80,33 @@ router.get("/jobs/:token", async (req, res) => {
   }
 });
 
+// endpoint to view system info
+router.get("/system_info", async (req, res) => {
+  try {
+    // Make a GET request to the Docker service
+    const response = await fetch(
+      `http://localhost:${dockerPort}/system_info`,
+      {
+        method: "GET",
+      }
+    );
+
+    // Check if the request was successful (status code 2xx)
+    if (response.ok) {
+      // Parse the JSON response and send it to the client
+      const data = await response.json();
+      res.json(data);
+    } else {
+      // If the request was not successful, send an error status and message
+      res
+        .status(response.status)
+        .json({ error: "Failed to fetch system_info from Docker service" });
+    }
+  } catch (error) {
+    // Handle any errors that occur during the fetch
+    console.error("Error fetching system_info:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;

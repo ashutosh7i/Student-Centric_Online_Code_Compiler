@@ -4,46 +4,41 @@ import { Link, useNavigate } from "react-router-dom";
 //
 import {
   Box,
-  Flex,
-  Icon,
-  useColorModeValue,
-  Text,
-  useDisclosure,
   Button,
   Center,
+  Container,
+  Flex,
+  FormControl,
+  FormLabel,
+  HStack,
+  Icon,
+  Input,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
   ModalFooter,
-  Container,
-  VStack,
-  HStack,
-  Textarea,
-  FormControl,
-  Input,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
+  ModalHeader,
+  ModalOverlay,
   Select,
-  useToast,
+  VStack,
+  useColorModeValue,
+  useDisclosure,
+  useToast
 } from "@chakra-ui/react";
 //
 import {
-  FiHome,
-  FiTrendingUp,
   FiCompass,
-  FiStar,
-  FiSettings,
-  FiPlus,
   FiDroplet,
+  FiHome,
   FiLogOut,
+  FiPlus,
+  FiSettings,
+  FiStar
 } from "react-icons/fi";
 //
-import Logout from "./Authentication/Logout";
 //
+import { useAuth0 } from "@auth0/auth0-react";
 import { useRecoilValue } from "recoil";
 import { userState } from "../state";
 
@@ -99,6 +94,7 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const { logout } = useAuth0();
 
   const [formData, setFormData] = useState({
     fileName: "",
@@ -270,7 +266,7 @@ export default function Sidebar() {
             mb={10}
             onClick={(e) => {
               e.preventDefault();
-              Logout();
+              logout();
             }}
           >
             Logout

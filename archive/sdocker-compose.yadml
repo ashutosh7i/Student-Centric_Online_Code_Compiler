@@ -1,0 +1,17 @@
+# docker compose to setup a postgres database
+
+services:
+  soc_db:
+    image: postgres:13.0
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+
+volumes:
+  pgdata:
