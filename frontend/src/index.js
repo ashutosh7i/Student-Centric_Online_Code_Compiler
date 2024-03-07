@@ -9,12 +9,12 @@ import App from "./App.js";
 
 const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
-console.log(window.location.origin)
+console.log(window.location.origin);
 root.render(
   <Auth0Provider
-  domain={process.env.REACT_APP_AUTH0_DOMAIN}
-  clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-  redirectUri={process.env.REACT_APP_CLIENT_URL}
+    domain={process.env.REACT_APP_AUTH0_DOMAIN}
+    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+    redirect_uri={process.env.REACT_APP_CLIENT_URL}
   >
     <ColorModeScript />
     <App />
