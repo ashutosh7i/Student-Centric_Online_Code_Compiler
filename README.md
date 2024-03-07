@@ -1,5 +1,4 @@
 [![wakatime](https://wakatime.com/badge/github/ashutosh7i/Student-Centric_Online_Code_Compiler.svg)](https://wakatime.com/@Ashutosh7i/projects/frclgtzjob) &nbsp;&nbsp;&nbsp;&nbsp;
-[![Azure Static Web Apps CI/CD](https://github.com/ashutosh7i/Student-Centric_Online_Code_Compiler/actions/workflows/azure-static-web-apps-calm-cliff-0a07d4f10.yml/badge.svg)](https://github.com/ashutosh7i/Student-Centric_Online_Code_Compiler/actions/workflows/azure-static-web-apps-calm-cliff-0a07d4f10.yml)
 # Student-Centric Online Code Compiler
 
 (College Minor Project)
