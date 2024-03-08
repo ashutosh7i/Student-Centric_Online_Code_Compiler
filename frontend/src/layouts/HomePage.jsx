@@ -23,7 +23,7 @@ import {
   useColorMode,
   useColorModeValue,
   VisuallyHidden,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 //
 import ReactPlayer from "react-player/youtube";
@@ -31,15 +31,34 @@ import ReactPlayer from "react-player/youtube";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { GithubOriginal } from "devicons-react";
 import {
+  FaBicycle,
+  FaClock,
   FaExchangeAlt,
+  FaFan,
+  FaFire,
   FaInstagram,
+  FaLanguage,
+  FaLock,
+  FaNetworkWired,
+  FaRocket,
+  FaServer,
+  FaTerminal,
   FaTwitter,
+  FaUserCheck,
   FaYoutube,
 } from "react-icons/fa";
 //
 import socLogo from "../assets/images/soc_logo.png";
 import LoginButton from "../components/Authentication/LoginButton";
 import Navbar from "../components/Navbar";
+//
+import image0 from "../assets/images/0.png";
+import image1 from "../assets/images/1.png";
+import image2 from "../assets/images/2.png";
+import image3 from "../assets/images/3.png";
+import image4 from "../assets/images/4.png";
+import image5 from "../assets/images/5.png";
+import image6 from "../assets/images/6.png";
 
 //Navbar Component
 const Nav = () => {
@@ -49,7 +68,7 @@ const Nav = () => {
       <Container px={4} maxW={"7xl"}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Box w={20} pt={5}>
-            <Image src={socLogo} />
+            <Image loading="lazy" src={socLogo} />
           </Box>
 
           <Flex alignItems={"center"}>
@@ -98,12 +117,12 @@ const Feature2 = ({ title, text, link }) => {
         h={160}
         align={"center"}
         justify={"center"}
-        color={"white"}
+        //color={"white"}
         rounded={"10%"}
-        bg={"gray.100"}
+        //bg={"gray.100"}
         mb={1}
       >
-        <Image src={link} />
+        <Image loading="lazy" rounded={"50%"} src={link} />
       </Flex>
       <Text fontSize={"xl"} fontWeight={600}>
         {title}
@@ -115,49 +134,6 @@ const Feature2 = ({ title, text, link }) => {
         {text}
       </Text>
     </VStack>
-  );
-};
-
-const SimpleThreeColumns = () => {
-  return (
-    <Box p={4}>
-      <Box pb={5}>
-        <Center>
-          <Heading>Our Idea🤔</Heading>
-        </Center>
-        <Text>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod
-          pariatur corrupti maxime natus unde sed ducimus aperiam id ea odio
-          quis excepturi omnis maiores, qui eius, assumenda praesentium eos
-          obcaecati?
-        </Text>
-      </Box>
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
-        <Feature2
-          link={
-            "https://www.wikihow.com/images/thumb/2/27/Calculate-a-Square-Root-by-Hand-Step-4-Version-5.jpg/v4-460px-Calculate-a-Square-Root-by-Hand-Step-4-Version-5.jpg"
-          }
-          title={"Lifetime Support"}
-          text={
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
-          }
-        />
-        <Feature2
-          link={"https://github.com/ashutosh7i.png"}
-          title={"Unlimited Donations"}
-          text={
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
-          }
-        />
-        <Feature2
-          link={"https://github.com/ashutosh7i.png"}
-          title={"Instant Delivery"}
-          text={
-            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore..."
-          }
-        />
-      </SimpleGrid>
-    </Box>
   );
 };
 
@@ -203,45 +179,45 @@ const Footer = () => {
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
           <Stack align={"flex-start"}>
             <ListHeader>Company</ListHeader>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               About Us
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Blog
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Careers
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Contact Us
             </Box>
           </Stack>
 
           <Stack align={"flex-start"}>
             <ListHeader>Support</ListHeader>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Help Center
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Safety Center
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Community Guidelines
             </Box>
           </Stack>
 
           <Stack align={"flex-start"}>
             <ListHeader>Legal</ListHeader>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Cookies Policy
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Privacy Policy
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Terms of Service
             </Box>
-            <Box as="a" href={"#"}>
+            <Box as="a" href={"https://twitter.com/ashutosh7i"}>
               Law Enforcement
             </Box>
           </Stack>
@@ -266,15 +242,24 @@ const Footer = () => {
           justify={{ md: "space-between" }}
           align={{ md: "center" }}
         >
-          <Text>© 2024 Ashutosh7i. All rights reserved</Text>
+          <Text>© 2024 Aashutosh Soni. All rights reserved</Text>
           <Stack direction={"row"} spacing={6}>
-            <SocialButton label={"Twitter"} href={"#"}>
+            <SocialButton
+              label={"Twitter"}
+              href={"https://twitter.com/ashutosh7i"}
+            >
               <FaTwitter />
             </SocialButton>
-            <SocialButton label={"YouTube"} href={"#"}>
+            <SocialButton
+              label={"YouTube"}
+              href={"https://twitter.com/ashutosh7i"}
+            >
               <FaYoutube />
             </SocialButton>
-            <SocialButton label={"Instagram"} href={"#"}>
+            <SocialButton
+              label={"Instagram"}
+              href={"https://twitter.com/ashutosh7i"}
+            >
               <FaInstagram />
             </SocialButton>
           </Stack>
@@ -295,32 +280,6 @@ export default function HomePage() {
   console.log("user", user);
   setUser(user);
 
-  // useEffect(() => {
-  //   const getUser = () => {
-  //     fetch("https://socbackend.centralindia.cloudapp.azure.com/auth/login/success", {
-  //       method: "GET",
-  //       credentials: "include",
-  //       headers: {
-  //         "Accept": "application/json",
-  //         "Content-Type": "application/json",
-  //         //"Access-Control-Allow-Credentials": true,
-  //       },
-  //     })
-  //       .then((response) => {
-  //         if (response.status === 200) return response.json();
-  //         throw new Error("authentication has been failed!");
-  //       })
-  //       .then((resObject) => {
-  //         setUser(resObject.user);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   getUser();
-  // }, []);
-
-  // const heightt = window.innerHeight - 900;
   return (
     <>
       <Navbar />
@@ -464,7 +423,6 @@ export default function HomePage() {
             </Box>
           </Flex>
         </Stack>
-        <Center>{"Images/ Text will be added at last.😁"}</Center>
         <Container maxW={"5xl"} py={12}>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
             <Stack spacing={4}>
@@ -484,11 +442,11 @@ export default function HomePage() {
                   iconBg={useColorModeValue("yellow.100", "yellow.900")}
                   text={"Diverse Coding Environments:"}
                   body={
-                    "Existing setups in educational institutions are often inconsistent and slow."
+                    "Multiple compilers to be installed for each programming language."
                   }
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"green.500"} w={5} h={5} />}
+                  icon={<Icon as={FaFan} color={"green.500"} w={5} h={5} />}
                   iconBg={useColorModeValue("green.100", "green.900")}
                   text={"Performance Challenges:"}
                   body={
@@ -496,7 +454,9 @@ export default function HomePage() {
                   }
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"purple.500"} w={5} h={5} />}
+                  icon={
+                    <Icon as={FaBicycle} color={"purple.500"} w={5} h={5} />
+                  }
                   iconBg={useColorModeValue("purple.100", "purple.900")}
                   text={"Data Loss Risk:"}
                   body={
@@ -507,11 +467,10 @@ export default function HomePage() {
             </Stack>
             <Flex>
               <Image
+                loading="lazy"
                 rounded={"md"}
                 alt={"feature image"}
-                src={
-                  "https://th.bing.com/th/id/OIG.PE.5WNR.kDFMdz_fPO_p?pid=ImgGn"
-                }
+                src={image1}
                 objectFit={"cover"}
               />
             </Flex>
@@ -531,27 +490,21 @@ export default function HomePage() {
           </Box>
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
             <Feature2
-              link={
-                "https://th.bing.com/th/id/OIG.i6jEKiZGmXb8UmL9gNtx?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn"
-              }
+              link={image2}
               title={"Centralized Platform:"}
               text={
                 "We've envisioned a centralized online platform, providing a consistent coding environment."
               }
             />
             <Feature2
-              link={
-                "https://cdn.kwork.com/pics/t3/69/25175250-63e6714dc5d99.jpg"
-              }
+              link={image3}
               title={"Multi-Language Support:"}
               text={
                 "Our platform offers support for Multiple programming languages, catering to diverse needs."
               }
             />
             <Feature2
-              link={
-                "https://th.bing.com/th/id/OIG.CmiJ9KpHbWsuLg8ixFp0?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn"
-              }
+              link={image4}
               title={"Real-Time Code Saving:"}
               text={
                 "We promote seamless real-time code saving and interaction to enhance your coding experience."
@@ -564,7 +517,7 @@ export default function HomePage() {
             <Stack spacing={4}>
               <Heading>Solution-</Heading>
               <Text color={"gray.500"} fontSize={"lg"}>
-                {"lorem"}
+                {""}
               </Text>
               <Stack
                 spacing={4}
@@ -575,7 +528,7 @@ export default function HomePage() {
                 }
               >
                 <Feature
-                  icon={<Icon as={SunIcon} color={"yellow.500"} w={5} h={5} />}
+                  icon={<Icon as={FaFire} color={"yellow.500"} w={5} h={5} />}
                   iconBg={useColorModeValue("yellow.100", "yellow.900")}
                   text={"Streamlined Coding Environment:"}
                   body={
@@ -583,15 +536,15 @@ export default function HomePage() {
                   }
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"green.500"} w={5} h={5} />}
-                  iconBg={useColorModeValue("green.100", "green.900")}
+                  icon={<Icon as={FaRocket} color={"red.500"} w={5} h={5} />}
+                  iconBg={useColorModeValue("yellow.100", "yellow.900")}
                   text={"Performance Enhancement:"}
                   body={
                     "Say goodbye to slow computers and experience coding without interruptions."
                   }
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"purple.500"} w={5} h={5} />}
+                  icon={<Icon as={FaLock} color={"green.500"} w={5} h={5} />}
                   iconBg={useColorModeValue("purple.100", "purple.900")}
                   text={"Data Security:"}
                   body={
@@ -602,12 +555,11 @@ export default function HomePage() {
             </Stack>
             <Flex>
               <Image
+                loading="lazy"
                 rounded={"md"}
                 alt={"feature image"}
-                src={
-                  "https://th.bing.com/th/id/OIG.DC3jcL7OBA4WJ1HDpCG6?w=173&h=173&c=6&r=0&o=5&dpr=2&pid=ImgGn"
-                }
-                objectFit={"cover"}
+                src={image5}
+                //objectFit={"cover"}
               />
             </Flex>
           </SimpleGrid>
@@ -625,19 +577,21 @@ export default function HomePage() {
                 }
               >
                 <Feature
-                  icon={<Icon as={SunIcon} color={"yellow.500"} w={5} h={5} />}
+                  icon={<Icon as={FaServer} color={"blue.500"} w={5} h={5} />}
                   iconBg={useColorModeValue("yellow.100", "yellow.900")}
                   text={"Centralized Platform: "}
-                  body={"Access your coding from anywhere on premise."}
+                  body={"Access your coding from anywhere on SOC."}
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"green.500"} w={5} h={5} />}
-                  iconBg={useColorModeValue("green.100", "green.900")}
+                  icon={
+                    <Icon as={FaLanguage} color={"green.500"} w={5} h={5} />
+                  }
+                  iconBg={useColorModeValue("orange.100", "orange.900")}
                   text={"Multi-Language Support:"}
                   body={"Code in the language of your choice."}
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"purple.500"} w={5} h={5} />}
+                  icon={<Icon as={FaClock} color={"orange.500"} w={5} h={5} />}
                   iconBg={useColorModeValue("purple.100", "purple.900")}
                   text={"Real-Time Code Saving:"}
                   body={"Never lose your work again."}
@@ -654,22 +608,28 @@ export default function HomePage() {
                 }
               >
                 <Feature
-                  icon={<Icon as={SunIcon} color={"purple.500"} w={5} h={5} />}
+                  icon={
+                    <Icon as={FaTerminal} color={"black.500"} w={5} h={5} />
+                  }
                   iconBg={useColorModeValue("purple.100", "purple.900")}
                   text={"Interactive Console:"}
                   body={"Easy input and view outputs and errors."}
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"purple.500"} w={5} h={5} />}
-                  iconBg={useColorModeValue("purple.100", "purple.900")}
+                  icon={
+                    <Icon as={FaUserCheck} color={"green.500"} w={5} h={5} />
+                  }
+                  iconBg={useColorModeValue("orange.100", "orange.900")}
                   text={"User Monitoring System:"}
                   body={"Educators can track and give assignments."}
                 />
                 <Feature
-                  icon={<Icon as={SunIcon} color={"purple.500"} w={5} h={5} />}
-                  iconBg={useColorModeValue("purple.100", "purple.900")}
+                  icon={
+                    <Icon as={FaNetworkWired} color={"blue.500"} w={5} h={5} />
+                  }
+                  iconBg={useColorModeValue("yellow.100", "yellow.900")}
                   text={"Locally Hosted:"}
-                  body={"Works even without internet"}
+                  body={"Works even without internet."}
                 />
               </Stack>
             </Stack>
@@ -683,46 +643,54 @@ export default function HomePage() {
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
             <Flex>
               <Image
+                loading="lazy"
                 rounded={"md"}
                 alt={"feature image"}
-                src={
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe1AN3kSvzRBWzP4hbcagzKGyTgEKI8tKPTg&usqp=CAU"
-                }
+                src={image0}
                 objectFit={"cover"}
               />
             </Flex>
             <Box>
               <UnorderedList>
                 <ListItem>
-                  <Text>Frontend: HTML, CSS, JavaScript, React, ChakraUI</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>Backend: Node.js, Express</Text>
-                </ListItem>
-                <ListItem>
                   <Text>
-                    Compilation: Native Compiler for various programming
-                    languages
+                    <u>Frontend:</u> HTML, CSS, JavaScript, React, ChakraUI.
                   </Text>
                 </ListItem>
                 <ListItem>
-                  <Text>Databases: MySQL for user and code management</Text>
+                  <Text>
+                    <u>Backend:</u> Node.js, Express, Redis, Docker.
+                  </Text>
                 </ListItem>
                 <ListItem>
-                  <Text>Hosting: NGINX and local network for wide access</Text>
+                  <Text>
+                    <u>Compilation:</u> Native Compiler for various programming
+                    languages.
+                  </Text>
                 </ListItem>
                 <ListItem>
-                  <Text>Authentication: OAuth and Google Workspace Login</Text>
+                  <Text>
+                    <u>Databases:</u> Postgres for user and code management.
+                  </Text>
+                </ListItem>
+                <ListItem>
+                  <Text>
+                    <u>Hosting:</u> NGINX and local network for wide access.
+                  </Text>
+                </ListItem>
+                <ListItem>
+                  <Text>
+                    <u>Authentication:</u> Auth0 and Google Workspace Login.
+                  </Text>
                 </ListItem>
               </UnorderedList>
             </Box>
             <Flex>
               <Image
+                loading="lazy"
                 rounded={"md"}
                 alt={"feature image"}
-                src={
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRP6hrJZbLx66auz8hIBHB_9MdifMK2NhKquw&usqp=CAU"
-                }
+                src={image6}
                 objectFit={"cover"}
               />
             </Flex>
