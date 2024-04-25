@@ -398,6 +398,7 @@ export default function Python() {
                         h="100%"
                         id="ouutput"
                         value={output}
+                        onChange={(e) => setOutput(e.target.value)} // replace `setOutput` with your state setter function
                       />
                     </Box>
                     <HStack

@@ -402,11 +402,13 @@ export default function Cs() {
                     <Text as={"b"}>Output</Text>
                     <Box border={"1px"} h={200}>
                       <Textarea
+                        fontFamily="monospace"
                         border={"1px"}
                         resize="none"
                         h="100%"
                         id="ouutput"
                         value={output}
+                        onChange={(e) => setOutput(e.target.value)} // replace `setOutput` with your state setter function
                       />
                     </Box>
                     <HStack
