@@ -27,7 +27,7 @@ export default async function getUserFiles(uid) {
     const responseData = await response.json();
 
     // Log the parsed response data
-    console.log(responseData);
+   //console.log(responseData);
 
     // Return the response data
     return responseData;

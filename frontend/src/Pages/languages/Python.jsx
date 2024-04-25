@@ -182,7 +182,7 @@ export default function Python() {
     //if code is not running already
     if (isRunning) {
       alert("code already running");
-      console.log("code already running");
+      //console.log("code already running");
     } else {
       //then only running the code
       // Clear the previous output
@@ -198,7 +198,7 @@ export default function Python() {
         });
 
         //logging out the unique token to each code
-        console.log("Response 1 Token:", response1.data.token);
+        //console.log("Response 1 Token:", response1.data.token);
 
         //fetching output from api
         if (response1.data.token) {
@@ -211,18 +211,18 @@ export default function Python() {
             //diffrent outputs based on compilation
             switch (status) {
               case "Accepted":
-                console.log("Accepted:", base64.decode(response2.data.stdout));
+                //console.log("Accepted:", base64.decode(response2.data.stdout));
                 setOutput(base64.decode(response2.data.stdout));
                 setTimeTaken(response2.data.wall_time);
                 setMemoryTaken(response2.data.memory / 1000);
                 setCpuTaken(response2.data.time);
                 break;
               case "Wrong Answer":
-                console.log("Wrong Answer:", response2.data);
+                //console.log("Wrong Answer:", response2.data);
                 setOutput("Wrong Answer");
                 break;
               case "Time Limit Exceeded":
-                console.log("Time Limit Exceeded:", response2.data);
+                //console.log("Time Limit Exceeded:", response2.data);
                 alert("Time Limit Exceeded");
                 setOutput(
                   `Time Limit Exceeded\n\n
@@ -233,7 +233,7 @@ export default function Python() {
                 );
                 break;
               case "Compilation Error":
-                console.log("Compilation Error:", response2.data);
+               //console.log("Compilation Error:", response2.data);
                 alert("Compilation Error");
                 setOutput(
                   `Compilation Error\n
@@ -249,7 +249,7 @@ export default function Python() {
               case "Runtime Error (SIGABRT)":
               case "Runtime Error (NZEC)":
               case "Runtime Error (Other)":
-                console.log("Runtime Error:", response2.data);
+                //console.log("Runtime Error:", response2.data);
                 alert("Runtime Error");
                 setOutput(
                   `${response2.data.status.description}
@@ -260,7 +260,7 @@ export default function Python() {
                 );
                 break;
               case "Internal Error":
-                console.log("Internal Server Error:", response2.data);
+                //console.log("Internal Server Error:", response2.data);
                 setOutput(
                   `Internal Server Error\n\n
                 ${base64.decode(response2.data.compile_output)}
@@ -270,11 +270,11 @@ export default function Python() {
                 );
                 break;
               case "Exec Format Error":
-                console.log("Exec Format Error:", response2.data);
+                //console.log("Exec Format Error:", response2.data);
                 setOutput("Exec Format Error");
                 break;
               default:
-                console.log(`Status: ${status}`);
+                //console.log(`Status: ${status}`);
                 setOutput(`${status}`);
                 break;
             }

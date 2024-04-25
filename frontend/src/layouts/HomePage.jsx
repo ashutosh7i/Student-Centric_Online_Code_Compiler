@@ -1,4 +1,5 @@
 //
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../state";
@@ -276,9 +277,19 @@ export default function HomePage() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   // console.log("userO", user);
-  console.log("isAuthenticated", isAuthenticated);
-  console.log("user", user);
+  //console.log("isAuthenticated", isAuthenticated);
+  //console.log("user", user);
   setUser(user);
+
+  const playerRef = useRef(null);
+  const [seeked, setSeeked] = useState(false);
+
+  const handleOnPlay = () => {
+    if (!seeked && playerRef.current && playerRef.current.seekTo) {
+      playerRef.current.seekTo(74);
+      setSeeked(true);
+    }
+  };
 
   return (
     <>
@@ -412,13 +423,16 @@ export default function HomePage() {
               overflow={"hidden"}
             >
               <ReactPlayer
+                ref={playerRef}
                 alt={"Hero Image"}
                 // fit={"cover"}
                 // align={"center"}
                 width={"100%"}
                 //w={800}
                 height={"100%"}
+                controls={true}
                 url="https://www.youtube.com/watch?v=70otZ8tULqY"
+                onPlay={handleOnPlay}
               />
             </Box>
           </Flex>

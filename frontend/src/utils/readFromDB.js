@@ -24,10 +24,10 @@ export default async function readFromDB(uid, filename) {
     const responseData = await response.json();
 
     // Extract the "data" property from the response
-    const data = JSON.parse(responseData.data).data;
-
+    const data = responseData.data.data;
     // Update the textarea with the retrieved data
-    return `${data}`;
+    // return `${data}`;
+    return data;
   } catch (error) {
     // Handle any errors and show an alert
     throw new Error(error.message);

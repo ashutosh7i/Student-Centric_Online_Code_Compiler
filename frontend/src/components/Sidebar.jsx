@@ -24,7 +24,7 @@ import {
   VStack,
   useColorModeValue,
   useDisclosure,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 //
 import {
@@ -34,7 +34,7 @@ import {
   FiLogOut,
   FiPlus,
   FiSettings,
-  FiStar
+  FiStar,
 } from "react-icons/fi";
 //
 //
@@ -128,13 +128,13 @@ export default function Sidebar() {
         setTimeout(() => {
           resolve(200);
           setIsLoading(false);
-          console.log("Form Data:", formData);
-          console.log(
-            `File created: ${formData.fileName}.${formData.language}`
-          );
+          //console.log("Form Data:", formData);
+          //console.log(
+          //  `File created: ${formData.fileName}.${formData.language}`
+          //);
           onClose();
           let red = `/${formData.language}/${user.nickname}/${formData.fileName}.${formData.language}`;
-          console.log(red);
+          //console.log(red);
           navigate(red);
         }, 1000);
       });

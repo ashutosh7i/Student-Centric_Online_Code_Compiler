@@ -113,8 +113,8 @@ export default function Dashboard() {
     const fetchUserFiles = async () => {
       const files = await getUserFiles(user.nickname);
       setUserFiles(files);
-      console.log(user.nickname)
-      console.log(files)
+      //console.log(user.nickname)
+      //console.log(files)
     };
 
     fetchUserFiles();

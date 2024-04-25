@@ -50,7 +50,7 @@ const NavLink = (props) => {
 
 export default function Navbar() {
   const user = useRecoilValue(userState);
-  console.log(user);
+  //console.log(user);
   const navigate = useNavigate();
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
