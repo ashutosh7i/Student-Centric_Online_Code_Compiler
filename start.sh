@@ -18,7 +18,7 @@ cd ..
 
 # Starting nodejs server
 npm install
-npm start &
+pm2 start index.js
 sleep 5
 
 # Build the frontend
@@ -31,4 +31,4 @@ npm install -g serve
 systemctl start nginx
 
 # serve the frontend
-nohup serve -s build
+pm2 serve -s build
