@@ -16,8 +16,8 @@ jobs:
 
     steps:
       - run: systemctl stop nginx
-      - run: killall node
-      - run: docker container kill $(docker container ls -q)
+      # - run: killall node
+      # - run: docker container kill $(docker container ls -q)
 
       - name: Increase swapfile
         run: |
