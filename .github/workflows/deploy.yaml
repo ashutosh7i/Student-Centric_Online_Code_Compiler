@@ -15,12 +15,6 @@ jobs:
         node-version: [21.x]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
       - run: systemctl stop nginx
       - run: killall node
       - run: docker container kill $(docker container ls -q)
@@ -52,6 +46,13 @@ jobs:
           ENV_VAR_5: ${{ secrets.ENV_VAR_5 }}
           ENV_VAR_6: ${{ secrets.ENV_VAR_6 }}
           ENV_VAR_7: ${{ secrets.ENV_VAR_7 }}
+      
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
 
       - run: npm install
       - run: npm start &
