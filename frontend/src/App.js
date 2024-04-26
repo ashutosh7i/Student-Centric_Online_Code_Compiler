@@ -8,6 +8,7 @@ import { ChakraProvider, theme, useMediaQuery } from "@chakra-ui/react";
 //
 import Dashboard from "./layouts/Dashboard";
 import HomePage from "./layouts/HomePage";
+import Admin from "./layouts/Admin";
 //
 import Cpp from "./Pages/languages/Cpp";
 import Cs from "./Pages/languages/Cs";
@@ -45,6 +46,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route path="/admin" exact element={<Admin />} />
               <Route
                 path="/profile"
                 exact

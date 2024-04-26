@@ -19,6 +19,7 @@ export default async function deleteUserFile(uid, filename) {
       throw new Error("Error deleting file from DB");
     }
     console.log(response);
+    return "File deleted from DB";
     // Show an alert
     // alert("File deleted successfully");
   } catch (error) {
