@@ -2,6 +2,31 @@ const router = require("express").Router();
 const moment = require("moment");
 const pool = require("../dbPool");
 
+// Getting all users from database
+router.get("/getAllUsers", async (req, res) => {
+  try {
+    // Define the SQL SELECT query to retrieve all users
+    const selectQuery = "SELECT DISTINCT id FROM coderepo";
+
+    const client = await pool.connect();
+    try {
+      const { rows } = await client.query(selectQuery);
+
+      if (rows.length > 0) {
+        console.log(`Users fetched successfully \n ${JSON.stringify(rows)}`);
+        res.status(200).json(rows);
+      } else {
+        res.sendStatus(204); // No users found
+      }
+    } finally {
+      client.release(); // Release the client back to the pool
+    }
+  } catch (error) {
+    console.error("Error retrieving users: " + error.message);
+    res.sendStatus(500);
+  }
+});
+
 // Retrieving filenames from database
 router.post("/getUserFiles", async (req, res) => {
   try {
