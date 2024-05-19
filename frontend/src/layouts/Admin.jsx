@@ -25,34 +25,46 @@ export default function Admin() {
   const [userFiles, setUserFiles] = useState([]);
   const [targetFile, setTargetFile] = useState("");
   const [fileContent, setFileContent] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
 
   const bgColor = useColorModeValue("white", "gray.800");
   const borderColor = useColorModeValue("gray.200", "gray.600");
 
   useEffect(() => {
-    const fetchUserFiles = async () => {
-      const res = await getAllUsers();
-      setAllUsers(res);
-    };
-
-    fetchUserFiles();
+    const password = prompt("Enter password");
+    if (password === process.env.REACT_APP_ADMIN_PASSWORD) {
+      setAuthenticated(true);
+    } else {
+      alert("Incorrect password");
+    }
   }, []);
 
   useEffect(() => {
-    if (targetUser) {
+    if (authenticated) {
+      const fetchUserFiles = async () => {
+        const res = await getAllUsers();
+        setAllUsers(res);
+      };
+
+      fetchUserFiles();
+    }
+  }, [authenticated]);
+
+  useEffect(() => {
+    if (authenticated && targetUser) {
       getUserFiles(targetUser).then((res) => {
         setUserFiles(res);
       });
     }
-  }, [targetUser]);
+  }, [authenticated, targetUser]);
 
   useEffect(() => {
-    if (targetFile) {
+    if (authenticated && targetFile) {
       readFromDB(targetUser, targetFile).then((res) => {
         setFileContent(res);
       });
     }
-  }, [targetFile]);
+  }, [authenticated, targetFile]);
 
   const updateCode = useCallback((codeVal) => {
     setFileContent(codeVal);
@@ -83,6 +95,10 @@ export default function Admin() {
         alert("Error: " + error.message);
       });
   };
+
+  if (!authenticated) {
+    return null;
+  }
 
   return (
     <Container maxW={"5xl"} py={12}>
