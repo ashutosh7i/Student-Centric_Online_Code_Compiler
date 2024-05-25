@@ -18,7 +18,7 @@ cd ..
 
 # Starting nodejs server
 npm install
-pm2 start index.js
+pm2 start index.js --name SOC_Backend
 sleep 5
 
 # Build the frontend
